@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title">
+  <title id="title">Paws of Kilmacolm</title>
+  <circle cx="100" cy="100" r="100" fill="#15130f"/>
+  <circle cx="100" cy="100" r="93" fill="none" stroke="#9fca9f" stroke-width="2" opacity="0.55"/>
+  <g fill="#9fca9f">
+    <ellipse cx="68" cy="78" rx="16" ry="22" transform="rotate(-18 68 78)"/>
+    <ellipse cx="132" cy="78" rx="16" ry="22" transform="rotate(18 132 78)"/>
+    <ellipse cx="86" cy="52" rx="13" ry="18" transform="rotate(-8 86 52)"/>
+    <ellipse cx="114" cy="52" rx="13" ry="18" transform="rotate(8 114 52)"/>
+    <path d="M100 86c-22 0-38 18-38 36 0 14 10 26 26 32 4 2 8-1 8-6v-8c0-6 4-10 10-10s10 4 10 10v8c0 5 4 8 8 6 16-6 26-18 26-32 0-18-16-36-38-36z"/>
+  </g>
+</svg>

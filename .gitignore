@@ -1,0 +1,5 @@
+.DS_Store
+.instagram-session
+*.session
+cookies.txt
+media/.keep-local
