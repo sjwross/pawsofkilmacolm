@@ -359,6 +359,24 @@
 
   .gallery-note{ margin-top:34px; font-size:0.9rem; color:var(--text-muted); text-align:center; }
 
+  .clip-head{ margin:54px 0 22px; }
+  .clip-head .kicker{ margin-bottom:6px; }
+  .clip-head h3{
+    font-size:clamp(1.4rem, 2.4vw, 1.85rem);
+    font-weight:500;
+  }
+  .clip-grid{
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr;
+    gap:14px;
+  }
+  .clip-grid .placeholder-img{
+    aspect-ratio:4/5;
+    transition:transform .5s var(--ease), border-color .4s ease;
+  }
+  .clip-a{ aspect-ratio:4/5; }
+  .clip-b, .clip-c{ aspect-ratio:4/5; }
+
   /* ---------- team ---------- */
   .team-grid{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:64px; align-items:center; }
   .team-photo{ aspect-ratio:3/4; }
@@ -462,6 +480,8 @@
   /* ---------- responsive ---------- */
   @media (max-width: 980px){
     .about-grid, .team-grid, .location-grid, .booking-wrap{ grid-template-columns:1fr; }
+    .clip-grid{ grid-template-columns:1fr 1fr; }
+    .clip-a{ grid-column:span 2; aspect-ratio:16/9; }
     .team-grid{ display:flex; flex-direction:column-reverse; }
     .services-grid{ grid-template-columns:repeat(2,1fr); }
     .footer-grid{ grid-template-columns:1fr 1fr; }
@@ -481,6 +501,8 @@
     nav.links a{ padding:14px 12px; opacity:1; }
     .gallery-grid{ grid-template-columns:repeat(2,1fr); grid-auto-rows:140px; }
     .g1,.g2,.g3,.g4,.g5,.g6,.g7{ grid-column:span 2; grid-row:span 2; }
+    .clip-grid{ grid-template-columns:1fr; }
+    .clip-a{ grid-column:span 1; aspect-ratio:4/5; }
     .services-grid{ grid-template-columns:1fr; }
     section{ padding:84px 0; }
     .footer-grid{ grid-template-columns:1fr; gap:36px; }
@@ -490,7 +512,7 @@
 <body class="has-demo-bar">
 
 <div class="grain"></div>
-<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop photos into <strong>media/</strong> as <strong>gallery-01.jpg</strong> … <strong>07.jpg</strong>, plus <strong>about.jpg</strong> and <strong>Groomerportrait.jpg</strong>. Same names as <strong>.mp4</strong> loop like a GIF when scrolled into view.</div>
+<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Photos stay in <strong>media/</strong> as <strong>gallery-01.jpg</strong> … <strong>07.jpg</strong>, plus <strong>about.jpg</strong> and <strong>Groomerportrait.jpg</strong>. Extra looping clips go in <strong>clip-01.mp4</strong> … <strong>03.mp4</strong>.</div>
 
 <!-- NAV -->
 <header class="site" id="siteHeader">
@@ -636,7 +658,7 @@
     <div class="section-head reveal">
       <div class="kicker">paws in progress</div>
       <h2>Recent grooms</h2>
-      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>. An <code>.mp4</code> with the same name plays as a silent looping clip.</p>
+      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More stills drop into <code>media/</code> as <code>gallery-01.jpg</code> through <code>07.jpg</code>. Looping clips have their own row underneath.</p>
     </div>
     <div class="gallery-grid reveal stagger">
       <div class="placeholder-img g1" style="--i:0" data-photo="media/gallery-01.jpg" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01.jpg</span>Instagram groom photo<span class="ph-size">720 × 720px</span></div></div>
@@ -646,6 +668,33 @@
       <div class="placeholder-img g5" style="--i:4" data-photo="media/gallery-05.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-05.jpg</span>Instagram groom photo<span class="ph-size">480 × 480px</span></div></div>
       <div class="placeholder-img g6" style="--i:5" data-photo="media/gallery-06.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-06.jpg</span>Instagram groom photo<span class="ph-size">720 × 480px</span></div></div>
       <div class="placeholder-img g7" style="--i:6" data-photo="media/gallery-07.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-07.jpg</span>Instagram groom photo<span class="ph-size">720 × 720px</span></div></div>
+    </div>
+    <div class="clip-head reveal">
+      <div class="kicker">in motion</div>
+      <h3>Salon clips</h3>
+    </div>
+    <div class="clip-grid reveal stagger">
+      <div class="placeholder-img clip-a" style="--i:0" data-video="media/clip-01.mp4" data-alt="Looping salon clip from Paws of Kilmacolm">
+        <div>
+          <span class="ph-label">clip-01.mp4</span>
+          Looping clip — silent, plays like a GIF when scrolled into view
+          <span class="ph-size">Recommended: short .mp4, 1080 × 1350px</span>
+        </div>
+      </div>
+      <div class="placeholder-img clip-b" style="--i:1" data-video="media/clip-02.mp4" data-alt="Looping salon clip from Paws of Kilmacolm">
+        <div>
+          <span class="ph-label">clip-02.mp4</span>
+          Looping clip
+          <span class="ph-size">Short .mp4, 1080 × 1350px</span>
+        </div>
+      </div>
+      <div class="placeholder-img clip-c" style="--i:2" data-video="media/clip-03.mp4" data-alt="Looping salon clip from Paws of Kilmacolm">
+        <div>
+          <span class="ph-label">clip-03.mp4</span>
+          Looping clip
+          <span class="ph-size">Short .mp4, 1080 × 1350px</span>
+        </div>
+      </div>
     </div>
     <div class="ig-strip reveal">
       <span class="ig-handle">@pawsofkilmacolm</span>
@@ -919,7 +968,7 @@
     }));
   }
 
-  // load dropped Instagram / local photos, or silent looping videos when files exist
+  // Photos fill data-photo slots. Looping clips only fill dedicated data-video slots.
   const cacheBust = (src) => src + (src.includes('?') ? '&' : '?') + 'v=' + Date.now();
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -958,18 +1007,13 @@
     video.load();
   });
 
-  const videoSourcesFor = (el) => {
-    const sources = [];
-    const explicit = el.getAttribute('data-video');
-    if(explicit) sources.push(explicit);
-    const photo = el.getAttribute('data-photo');
-    if(photo){
-      const base = photo.replace(/\.[a-z0-9]+$/i, '');
-      ['.mp4', '.webm'].forEach((ext) => {
-        const candidate = base + ext;
-        if(!sources.includes(candidate)) sources.push(candidate);
-      });
-    }
+  const videoSourcesFor = (src) => {
+    const sources = [src];
+    const base = src.replace(/\.[a-z0-9]+$/i, '');
+    ['.mp4', '.webm'].forEach((ext) => {
+      const candidate = base + ext;
+      if(!sources.includes(candidate)) sources.push(candidate);
+    });
     return sources;
   };
 
@@ -995,17 +1039,9 @@
       video.currentTime = 0;
       video.play().catch(() => {});
     });
-    if(el.tagName === 'IMG'){
-      const wrap = el.parentElement;
-      if(wrap){
-        wrap.classList.add('has-photo', 'has-video');
-        el.replaceWith(video);
-      }
-    } else {
-      el.classList.add('has-photo', 'has-video');
-      el.innerHTML = '';
-      el.appendChild(video);
-    }
+    el.classList.add('has-photo', 'has-video');
+    el.innerHTML = '';
+    el.appendChild(video);
     playWhenVisible.observe(video);
     if(!prefersReducedMotion){
       const rect = video.getBoundingClientRect();
@@ -1014,27 +1050,25 @@
     }
   };
 
-  document.querySelectorAll('[data-photo], [data-video]').forEach(async (el) => {
-    const alt = el.getAttribute('data-alt') || el.getAttribute('alt') || '';
-    const photoSrc = el.getAttribute('data-photo');
-    const [videoHits, loadedPhoto] = await Promise.all([
-      Promise.all(videoSourcesFor(el).map(tryVideo)),
-      photoSrc ? tryPhoto(photoSrc) : Promise.resolve(null)
-    ]);
-    const video = videoHits.find(Boolean);
-    if(video){
-      mountLoopingVideo(el, video, alt);
-      return;
-    }
-    if(!loadedPhoto) return;
-    loadedPhoto.alt = alt;
+  document.querySelectorAll('[data-photo]').forEach(async (el) => {
+    const src = el.getAttribute('data-photo');
+    const loaded = await tryPhoto(src);
+    if(!loaded) return;
+    loaded.alt = el.getAttribute('data-alt') || el.getAttribute('alt') || '';
     if(el.tagName === 'IMG'){
-      el.src = loadedPhoto.src;
+      el.src = loaded.src;
     } else {
       el.classList.add('has-photo');
       el.innerHTML = '';
-      el.appendChild(loadedPhoto);
+      el.appendChild(loaded);
     }
+  });
+
+  document.querySelectorAll('[data-video]').forEach(async (el) => {
+    const alt = el.getAttribute('data-alt') || '';
+    const hits = await Promise.all(videoSourcesFor(el.getAttribute('data-video')).map(tryVideo));
+    const video = hits.find(Boolean);
+    if(video) mountLoopingVideo(el, video, alt);
   });
 
   // scroll reveal
