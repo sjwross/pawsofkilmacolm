@@ -187,10 +187,18 @@
     background:var(--bg-tertiary);
   }
   html.dark .placeholder-img.has-photo{ background:#1c1a15; }
-  .placeholder-img.has-photo img{
+  .placeholder-img.has-photo img,
+  .placeholder-img.has-photo video{
     width:100%; height:100%; object-fit:cover;
+    pointer-events:none;
   }
-  .about-photo.has-photo img{ object-position: 20% center; }
+  .placeholder-img.has-photo video{
+    display:block;
+    border:0;
+    background:var(--bg-tertiary);
+  }
+  .about-photo.has-photo img,
+  .about-photo.has-photo video{ object-position: 20% center; }
   .ig-strip{
     display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
     margin-top:28px;
@@ -482,7 +490,7 @@
 <body class="has-demo-bar">
 
 <div class="grain"></div>
-<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop Instagram photos into <strong>media/</strong> as <strong>gallery-01.jpg</strong> … <strong>07.jpg</strong>, plus <strong>about.jpg</strong> and <strong>Groomerportrait.jpg</strong>.</div>
+<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop photos into <strong>media/</strong> as <strong>gallery-01.jpg</strong> … <strong>07.jpg</strong>, plus <strong>about.jpg</strong> and <strong>Groomerportrait.jpg</strong>. Same names as <strong>.mp4</strong> loop like a GIF when scrolled into view.</div>
 
 <!-- NAV -->
 <header class="site" id="siteHeader">
@@ -628,7 +636,7 @@
     <div class="section-head reveal">
       <div class="kicker">paws in progress</div>
       <h2>Recent grooms</h2>
-      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>.</p>
+      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>. An <code>.mp4</code> with the same name plays as a silent looping clip.</p>
     </div>
     <div class="gallery-grid reveal stagger">
       <div class="placeholder-img g1" style="--i:0" data-photo="media/gallery-01.jpg" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01.jpg</span>Instagram groom photo<span class="ph-size">720 × 720px</span></div></div>
@@ -911,24 +919,121 @@
     }));
   }
 
-  // load dropped Instagram / local photos when files exist
+  // load dropped Instagram / local photos, or silent looping videos when files exist
+  const cacheBust = (src) => src + (src.includes('?') ? '&' : '?') + 'v=' + Date.now();
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const tryPhoto = (src) => new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = () => resolve(null);
-    img.src = src + (src.includes('?') ? '&' : '?') + 'v=' + Date.now();
+    img.src = cacheBust(src);
   });
-  document.querySelectorAll('[data-photo]').forEach(async (el) => {
-    const src = el.getAttribute('data-photo');
-    const loaded = await tryPhoto(src);
-    if(!loaded) return;
-    loaded.alt = el.getAttribute('data-alt') || el.getAttribute('alt') || '';
+
+  const tryVideo = (src) => new Promise((resolve) => {
+    const video = document.createElement('video');
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.controls = false;
+    video.disablePictureInPicture = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('disablepictureinpicture', '');
+    const ok = () => { cleanup(); resolve(video); };
+    const fail = () => { cleanup(); resolve(null); };
+    const cleanup = () => {
+      clearTimeout(timer);
+      video.removeEventListener('loadeddata', ok);
+      video.removeEventListener('error', fail);
+    };
+    const timer = setTimeout(fail, 8000);
+    video.addEventListener('loadeddata', ok, { once:true });
+    video.addEventListener('error', fail, { once:true });
+    video.src = cacheBust(src);
+    video.load();
+  });
+
+  const videoSourcesFor = (el) => {
+    const sources = [];
+    const explicit = el.getAttribute('data-video');
+    if(explicit) sources.push(explicit);
+    const photo = el.getAttribute('data-photo');
+    if(photo){
+      const base = photo.replace(/\.[a-z0-9]+$/i, '');
+      ['.mp4', '.webm'].forEach((ext) => {
+        const candidate = base + ext;
+        if(!sources.includes(candidate)) sources.push(candidate);
+      });
+    }
+    return sources;
+  };
+
+  const playWhenVisible = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target;
+      if(prefersReducedMotion){
+        video.pause();
+        return;
+      }
+      if(entry.isIntersecting){
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  const mountLoopingVideo = (el, video, alt) => {
+    video.setAttribute('aria-label', alt);
+    video.setAttribute('role', 'img');
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    });
     if(el.tagName === 'IMG'){
-      el.src = loaded.src;
+      const wrap = el.parentElement;
+      if(wrap){
+        wrap.classList.add('has-photo', 'has-video');
+        el.replaceWith(video);
+      }
+    } else {
+      el.classList.add('has-photo', 'has-video');
+      el.innerHTML = '';
+      el.appendChild(video);
+    }
+    playWhenVisible.observe(video);
+    if(!prefersReducedMotion){
+      const rect = video.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if(inView) video.play().catch(() => {});
+    }
+  };
+
+  document.querySelectorAll('[data-photo], [data-video]').forEach(async (el) => {
+    const alt = el.getAttribute('data-alt') || el.getAttribute('alt') || '';
+    const photoSrc = el.getAttribute('data-photo');
+    const [videoHits, loadedPhoto] = await Promise.all([
+      Promise.all(videoSourcesFor(el).map(tryVideo)),
+      photoSrc ? tryPhoto(photoSrc) : Promise.resolve(null)
+    ]);
+    const video = videoHits.find(Boolean);
+    if(video){
+      mountLoopingVideo(el, video, alt);
+      return;
+    }
+    if(!loadedPhoto) return;
+    loadedPhoto.alt = alt;
+    if(el.tagName === 'IMG'){
+      el.src = loadedPhoto.src;
     } else {
       el.classList.add('has-photo');
       el.innerHTML = '';
-      el.appendChild(loaded);
+      el.appendChild(loadedPhoto);
     }
   });
 
