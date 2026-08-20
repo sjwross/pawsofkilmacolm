@@ -239,7 +239,7 @@
     left:50%; top:50%;
     transform:translate(-50%, -50%);
     width:100vw;
-    height:min(210px, 48vw);
+    height:min(230px, 52vw);
     z-index:0;
     overflow:hidden;
     pointer-events:none;
@@ -262,16 +262,17 @@
   .hero-marquee-item{
     flex:0 0 auto;
     height:100%;
-    width:min(280px, 42vw);
+    width:min(168px, 28vw);
     border-radius:4px;
     overflow:hidden;
     background:var(--bg-tertiary);
-    contain:layout paint;
+    contain:layout paint style;
   }
   .hero-marquee-item img,
   .hero-marquee-item video{
     width:100%; height:100%;
     object-fit:cover;
+    object-position:center;
     display:block;
     transform:translateZ(0);
   }
@@ -417,6 +418,9 @@
   .g5{ grid-column:span 2; grid-row:span 2; }
   .g6{ grid-column:span 3; grid-row:span 2; }
   .g7{ grid-column:span 3; grid-row:span 3; }
+  .g8{ grid-column:span 2; grid-row:span 2; }
+  .g9{ grid-column:span 2; grid-row:span 2; }
+  .g10{ grid-column:span 2; grid-row:span 2; }
 
   .gallery-note{ margin-top:34px; font-size:0.9rem; color:var(--text-muted); text-align:center; }
 
@@ -541,7 +545,7 @@
     nav.links.open{ display:flex; }
     nav.links a{ padding:14px 12px; opacity:1; }
     .gallery-grid{ grid-template-columns:repeat(2,1fr); grid-auto-rows:140px; }
-    .g1,.g2,.g3,.g4,.g5,.g6,.g7{ grid-column:span 2; grid-row:span 2; }
+    .g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8,.g9,.g10{ grid-column:span 2; grid-row:span 2; }
     .services-grid{ grid-template-columns:1fr; }
     section{ padding:84px 0; }
     .footer-grid{ grid-template-columns:1fr; gap:36px; }
@@ -551,7 +555,7 @@
 <body class="has-demo-bar">
 
 <div class="grain"></div>
-<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop photos/videos into <strong>media/</strong> as <strong>gallery-01</strong> … <strong>07</strong> (<strong>.jpg</strong> / <strong>.mp4</strong>), plus <strong>about.jpg</strong> and <strong>team.jpg</strong>.</div>
+<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop photos/videos into <strong>media/</strong> as <strong>gallery-01</strong> … <strong>10</strong> (<strong>.jpg</strong> / <strong>.mp4</strong>), plus <strong>about.jpg</strong> and <strong>team.jpg</strong>.</div>
 
 <!-- NAV -->
 <header class="site" id="siteHeader">
@@ -705,13 +709,16 @@
       <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>.</p>
     </div>
     <div class="gallery-grid reveal stagger" id="galleryGrid">
-      <div class="placeholder-img g1" style="--i:0" data-gallery-slot="1" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01</span>Instagram groom photo or video<span class="ph-size">720 × 720px</span></div></div>
-      <div class="placeholder-img g2" style="--i:1" data-gallery-slot="2" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-02</span>Instagram groom photo or video<span class="ph-size">720 × 480px</span></div></div>
-      <div class="placeholder-img g3" style="--i:2" data-gallery-slot="3" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-03</span>Instagram groom photo or video<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g4" style="--i:3" data-gallery-slot="4" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-04</span>Instagram groom photo or video<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g5" style="--i:4" data-gallery-slot="5" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-05</span>Instagram groom photo or video<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g6" style="--i:5" data-gallery-slot="6" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-06</span>Instagram groom photo or video<span class="ph-size">720 × 480px</span></div></div>
-      <div class="placeholder-img g7" style="--i:6" data-gallery-slot="7" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-07</span>Instagram groom photo or video<span class="ph-size">720 × 720px</span></div></div>
+      <div class="placeholder-img g1" style="--i:0" data-gallery-slot="1" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g2" style="--i:1" data-gallery-slot="2" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-02</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g3" style="--i:2" data-gallery-slot="3" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-03</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g4" style="--i:3" data-gallery-slot="4" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-04</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g5" style="--i:4" data-gallery-slot="5" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-05</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g6" style="--i:5" data-gallery-slot="6" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-06</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g7" style="--i:6" data-gallery-slot="7" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-07</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g8" style="--i:7" data-gallery-slot="8" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-08</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g9" style="--i:8" data-gallery-slot="9" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-09</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g10" style="--i:9" data-gallery-slot="10" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-10</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
     </div>
     <div class="ig-strip reveal">
       <span class="ig-handle">@pawsofkilmacolm</span>
@@ -1119,10 +1126,10 @@
 
     const videos = galleryItems.filter((m) => m.type === 'video');
     const photos = galleryItems.filter((m) => m.type === 'image');
-    let strip = [...videos, ...photos];
+    // Prefer videos for the strip; add gallery photos only if needed to fill horizontally
+    let strip = videos.length >= 3 ? [...videos] : [...videos, ...photos];
 
-    // Prefer gallery media; if not enough for a full strip, fold in other salon photos
-    if(strip.length < 4){
+    if(strip.length < 3){
       const extras = ['media/about.jpg', 'media/team.jpg'];
       for(const path of extras){
         if(strip.some((m) => m.src.split('?')[0] === path)) continue;
@@ -1157,6 +1164,8 @@
         video.autoplay = true;
         video.preload = 'auto';
         video.setAttribute('aria-hidden', 'true');
+        // Hint decoder to keep a small buffer while sliding
+        try { video.disableRemotePlayback = true; } catch (_) {}
         item.appendChild(video);
       } else {
         const img = document.createElement('img');
@@ -1169,25 +1178,33 @@
       return item;
     };
 
-    // Enough tiles for one full loop unit (≥ ~1.25 viewports), then exact duplicate for -50%
-    let unit = [];
-    while(unit.length < Math.max(6, strip.length * 2)){
-      unit = unit.concat(strip);
-    }
     track.innerHTML = '';
-    const appendUnit = () => {
-      unit.forEach((m) => track.appendChild(makeItem(m)));
+    const paint = (list) => {
+      list.forEach((m) => track.appendChild(makeItem(m)));
     };
-    appendUnit();
-    // Grow until one unit roughly fills the screen, then lock and duplicate
+
+    // First half: unique strip, pad with photos (not extra video clones) if narrow
+    let unit = strip.slice();
+    paint(unit);
+    const photoPad = photos.length ? photos : strip.filter((m) => m.type === 'image');
     let guard = 0;
-    while(track.scrollWidth < window.innerWidth * 1.2 && guard < 4){
-      unit = unit.concat(strip);
-      track.innerHTML = '';
-      appendUnit();
+    while(track.scrollWidth < window.innerWidth * 1.05 && guard < 6){
+      if(photoPad.length){
+        paint([photoPad[guard % photoPad.length]]);
+      } else {
+        paint(unit);
+      }
       guard += 1;
     }
-    appendUnit(); // second identical half
+
+    // Exact duplicate of current first-half nodes via fresh media nodes (keeps videos healthy)
+    const firstHalf = Array.from(track.children).map((node, idx) => {
+      const vid = node.querySelector('video');
+      const img = node.querySelector('img');
+      if(vid) return { type: 'video', src: vid.currentSrc || vid.src };
+      return { type: 'image', src: img.currentSrc || img.src };
+    });
+    firstHalf.forEach((m) => track.appendChild(makeItem(m)));
 
     const playAll = () => {
       track.querySelectorAll('video').forEach((v) => {
@@ -1203,8 +1220,8 @@
 
     requestAnimationFrame(() => {
       const halfWidth = track.scrollWidth / 2;
-      const pxPerSec = 34;
-      const duration = Math.max(30, halfWidth / pxPerSec);
+      const pxPerSec = 32;
+      const duration = Math.max(36, halfWidth / pxPerSec);
       wrap.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
       wrap.classList.add('is-ready');
       playAll();
