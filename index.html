@@ -189,11 +189,15 @@
   html.dark .placeholder-img.has-photo{ background:#1c1a15; }
   .placeholder-img.has-photo img,
   .placeholder-img.has-photo video{
-    width:100%; height:100%; object-fit:cover;
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center center;
     display:block;
   }
   .placeholder-img.has-photo video{
     pointer-events:none;
+    background:transparent;
   }
   .about-photo.has-photo img{ object-position: 20% center; }
   .ig-strip{
@@ -263,24 +267,28 @@
     animation:heroMarqueeSlide var(--marquee-duration, 48s) linear infinite;
   }
   .hero-marquee-item{
+    position:relative;
     flex:0 0 auto;
     height:100%;
     width:min(200px, 34vw);
     border-radius:4px;
     overflow:hidden;
-    background:var(--bg-tertiary);
+    background:transparent;
     contain:layout paint style;
   }
   .hero-marquee-item img,
   .hero-marquee-item video{
-    width:100%; height:100%;
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    max-width:none;
+    max-height:none;
     object-fit:cover;
-    object-position:center;
+    object-position:center center;
     display:block;
     transform:translateZ(0);
-  }
-  .hero-marquee-item video{
-    background:#1c1a15;
+    background:transparent;
   }
   @keyframes heroMarqueeSlide{
     from{ transform:translate3d(0,0,0); }
@@ -1090,6 +1098,8 @@
       video.autoplay = true;
       video.preload = 'auto';
       video.setAttribute('aria-label', alt);
+      video.style.objectFit = 'cover';
+      video.style.objectPosition = 'center center';
       el.appendChild(video);
       const play = () => { video.play().catch(() => {}); };
       play();
@@ -1098,6 +1108,8 @@
       const img = media.el || new Image();
       img.src = media.src;
       img.alt = alt;
+      img.style.objectFit = 'cover';
+      img.style.objectPosition = 'center center';
       el.appendChild(img);
     }
   };
@@ -1167,7 +1179,8 @@
         video.autoplay = true;
         video.preload = 'auto';
         video.setAttribute('aria-hidden', 'true');
-        // Hint decoder to keep a small buffer while sliding
+        video.style.objectFit = 'cover';
+        video.style.objectPosition = 'center center';
         try { video.disableRemotePlayback = true; } catch (_) {}
         item.appendChild(video);
       } else {
@@ -1176,6 +1189,8 @@
         img.alt = '';
         img.decoding = 'async';
         img.loading = 'eager';
+        img.style.objectFit = 'cover';
+        img.style.objectPosition = 'center center';
         item.appendChild(img);
       }
       return item;
