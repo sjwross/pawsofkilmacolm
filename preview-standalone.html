@@ -241,10 +241,8 @@
     top:50%;
     transform:translate(-50%, -50%);
     width:100vw;
-    /* ~70% of the logo height, locked to the logo box center */
-    height:70%;
-    min-height:140px;
-    max-height:200px;
+    /* Full logo height so the whole mark sits in front of the strip */
+    height:100%;
     z-index:0;
     overflow:hidden;
     pointer-events:none;
@@ -267,7 +265,7 @@
   .hero-marquee-item{
     flex:0 0 auto;
     height:100%;
-    width:min(148px, 26vw);
+    width:min(200px, 34vw);
     border-radius:4px;
     overflow:hidden;
     background:var(--bg-tertiary);
