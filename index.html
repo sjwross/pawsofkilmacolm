@@ -226,20 +226,25 @@
 
   .hero-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; width:100%; }
 
-  /* Full-bleed media strip behind the dog logo, above the eyebrow */
+  /* Full-bleed media strip — vertically centered on the logo */
   .hero-logo-stage{
     position:relative;
     width:100%;
-    display:flex; align-items:center; justify-content:center;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     margin-bottom:10px;
-    min-height:min(260px, 62vw);
   }
   .hero-marquee{
     position:absolute;
-    left:50%; top:50%;
+    left:50%;
+    top:50%;
     transform:translate(-50%, -50%);
     width:100vw;
-    height:min(230px, 52vw);
+    /* ~70% of the logo height, locked to the logo box center */
+    height:70%;
+    min-height:140px;
+    max-height:200px;
     z-index:0;
     overflow:hidden;
     pointer-events:none;
@@ -262,7 +267,7 @@
   .hero-marquee-item{
     flex:0 0 auto;
     height:100%;
-    width:min(168px, 28vw);
+    width:min(148px, 26vw);
     border-radius:4px;
     overflow:hidden;
     background:var(--bg-tertiary);
