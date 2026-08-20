@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paws of Kilmacolm — Dog Grooming Salon</title>
+<meta name="description" content="Paws of Kilmacolm: a calm, considered dog grooming salon in Kilmacolm, Scotland.">
+<link rel="icon" href="https://sjwross.github.io/pawsofkilmacolm/assets/paws-logo.png" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#15130f;
+    --ink-soft:#211e18;
+    --ink-line: rgba(243,236,217,0.10);
+    --sage:#9fca9f;
+    --sage-deep:#6f9d74;
+    --sage-pale:#dcecd8;
+    --parchment:#f4ecd8;
+    --parchment-dark:#e6d8b8;
+    --ink-on-parchment:#221f18;
+    --max: 1180px;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+
+  /* Light mode (default) */
+  :root{
+    --bg-primary:#f4ecd8;
+    --bg-secondary:#e6d8b8;
+    --bg-tertiary:#ddd0b0;
+    --text-primary:#221f18;
+    --text-secondary:rgba(34,31,24,0.75);
+    --text-muted:rgba(34,31,24,0.55);
+    --line-color:rgba(34,31,24,0.12);
+    --nav-bg:rgba(244,236,216,0.92);
+    --card-bg:#fff;
+    --form-bg:#fff;
+  }
+
+  /* Dark mode */
+  html.dark{
+    --bg-primary:#15130f;
+    --bg-secondary:#211e18;
+    --bg-tertiary:#2b2820;
+    --text-primary:#f4ecd8;
+    --text-secondary:rgba(244,236,216,0.78);
+    --text-muted:rgba(244,236,216,0.55);
+    --line-color:rgba(243,236,217,0.10);
+    --nav-bg:rgba(21,19,15,0.86);
+    --card-bg:#211e18;
+    --form-bg:#f4ecd8;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg-primary);
+    color:var(--text-primary);
+    font-family:'Jost', sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    transition:background .4s var(--ease), color .4s var(--ease);
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .script{
+    font-family:'Caveat', cursive;
+    font-weight:600;
+  }
+  p{ line-height:1.7; }
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  ::selection{ background:var(--sage); color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--sage);
+    outline-offset:3px;
+  }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 32px; }
+
+  /* ---------- texture ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:2000;
+    opacity:0.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- nav ---------- */
+  header.site{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    padding:20px 0;
+    transition:background .5s var(--ease), padding .4s var(--ease), border-color .5s var(--ease), backdrop-filter .5s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.site.solid{
+    background:var(--nav-bg);
+    backdrop-filter:blur(10px);
+    padding:12px 0;
+    border-color:var(--line-color);
+  }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:24px; }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand img{ width:52px; height:52px; object-fit:contain; transition:transform .5s var(--ease); }
+  .brand:hover img{ transform:rotate(-6deg) scale(1.05); }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+  .brand-text b{ font-family:'Fraunces', serif; font-size:1.05rem; letter-spacing:0.01em; }
+  .brand-text span{ font-family:'Caveat', cursive; color:var(--sage); font-size:1rem; margin-top:1px; }
+
+  nav.links{ display:flex; gap:34px; align-items:center; }
+  nav.links a{
+    font-size:0.92rem; letter-spacing:0.03em; text-transform:uppercase;
+    position:relative; padding:4px 0; color:var(--text-primary); opacity:0.85;
+  }
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px; background:var(--sage);
+    transition:width .35s var(--ease);
+  }
+  nav.links a:hover{ opacity:1; }
+  nav.links a:hover::after{ width:100%; }
+
+  .btn-ribbon{
+    display:inline-flex; align-items:center; justify-content:center;
+    position:relative; font-family:'Jost',sans-serif; font-weight:500; font-size:0.85rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    padding:13px 30px; color:var(--ink);
+    background:var(--sage);
+    clip-path: polygon(3% 0%, 97% 0%, 100% 50%, 97% 100%, 3% 100%, 0% 50%);
+    border:none; cursor:pointer;
+    transition:transform .35s var(--ease), background .35s var(--ease), letter-spacing .35s var(--ease);
+  }
+  .btn-ribbon:hover{ background:var(--parchment); transform:translateY(-2px); letter-spacing:0.09em; }
+  .btn-ribbon:active{ transform:translateY(0px) scale(0.98); }
+  .btn-ribbon.ghost{
+    background:transparent; color:var(--text-primary); box-shadow:inset 0 0 0 1.5px var(--line-color);
+  }
+  .btn-ribbon.ghost:hover{ box-shadow:inset 0 0 0 1.5px var(--sage); background:rgba(159,202,159,0.15); color:var(--text-primary); }
+
+  .nav-cta{ display:flex; align-items:center; gap:12px; }
+
+  /* Theme toggle */
+  .theme-toggle{
+    display:flex; align-items:center; gap:8px;
+    padding:6px 10px; border-radius:20px;
+    background:var(--line-color);
+    cursor:pointer; border:none;
+    transition:background .3s var(--ease);
+  }
+  .theme-toggle:hover{ background:rgba(159,202,159,0.2); }
+  .theme-toggle .icon{ width:18px; height:18px; color:var(--text-primary); transition:color .3s, transform .3s var(--ease); }
+  .theme-toggle .icon.sun{ display:block; }
+  .theme-toggle .icon.moon{ display:none; }
+  html.dark .theme-toggle .icon.sun{ display:none; }
+  html.dark .theme-toggle .icon.moon{ display:block; }
+  .theme-toggle:hover .icon{ transform:rotate(15deg); }
+  .burger{
+    display:none; width:42px; height:42px; border:0; background:transparent;
+    cursor:pointer; padding:10px; flex-direction:column; justify-content:center; gap:5px;
+  }
+  .burger span{ display:block; height:1.5px; width:100%; background:var(--text-primary); transition:transform .3s var(--ease), opacity .3s; }
+  .burger[aria-expanded="true"] span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .burger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+  .burger[aria-expanded="true"] span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+  .demo-bar{
+    position:fixed; top:0; left:0; right:0; z-index:1100;
+    background:var(--sage); color:var(--ink); font-size:0.82rem;
+    padding:8px 16px; text-align:center; letter-spacing:0.02em;
+  }
+  .demo-bar strong{ font-weight:600; }
+  body.has-demo-bar{ padding-top:34px; }
+  body.has-demo-bar header.site{ top:34px; }
+
+  .placeholder-img.has-photo{
+    padding:0; border-style:solid; border-color:var(--line-color);
+    background:var(--bg-tertiary);
+  }
+  html.dark .placeholder-img.has-photo{ background:#1c1a15; }
+  .placeholder-img.has-photo img,
+  .placeholder-img.has-photo video{
+    width:100%; height:100%; object-fit:cover;
+    display:block;
+  }
+  .placeholder-img.has-photo video{
+    pointer-events:none;
+  }
+  .about-photo.has-photo img{ object-position: 20% center; }
+  .ig-strip{
+    display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
+    margin-top:28px;
+  }
+  .ig-handle{ font-family:'Caveat', cursive; font-size:1.45rem; color:var(--sage); }
+  .map-frame{
+    width:100%; height:100%; min-height:360px; border:0; border-radius:4px;
+    filter:grayscale(0.25) contrast(1.05);
+  }
+  .draft-tag{
+    display:inline-block; margin-left:8px; font-family:'Jost',sans-serif;
+    font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--sage-deep); opacity:0.8;
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:140px 24px 80px; overflow:hidden;
+  }
+  .hero-glow{
+    position:absolute; top:50%; left:50%; width:900px; height:900px; transform:translate(-50%,-52%);
+    background:radial-gradient(circle, rgba(159,202,159,0.25) 0%, rgba(159,202,159,0.08) 45%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-rings{ position:absolute; inset:0; pointer-events:none; opacity:0.5;}
+  .hero-rings svg{ width:100%; height:100%; }
+
+  .hero-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; width:100%; }
+
+  /* Full-bleed media strip behind the dog logo, above the eyebrow */
+  .hero-logo-stage{
+    position:relative;
+    width:100%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:10px;
+    min-height:min(260px, 62vw);
+  }
+  .hero-marquee{
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%, -50%);
+    width:100vw;
+    height:min(230px, 52vw);
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .8s var(--ease);
+    -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+            mask-image:linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  }
+  .hero-marquee.is-ready{ opacity:1; }
+  .hero-marquee-track{
+    display:flex; align-items:stretch; gap:12px; height:100%;
+    width:max-content;
+    will-change:transform;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+  }
+  .hero-marquee.is-ready .hero-marquee-track{
+    animation:heroMarqueeSlide var(--marquee-duration, 48s) linear infinite;
+  }
+  .hero-marquee-item{
+    flex:0 0 auto;
+    height:100%;
+    width:min(168px, 28vw);
+    border-radius:4px;
+    overflow:hidden;
+    background:var(--bg-tertiary);
+    contain:layout paint style;
+  }
+  .hero-marquee-item img,
+  .hero-marquee-item video{
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center;
+    display:block;
+    transform:translateZ(0);
+  }
+  .hero-marquee-item video{
+    background:#1c1a15;
+  }
+  @keyframes heroMarqueeSlide{
+    from{ transform:translate3d(0,0,0); }
+    to{ transform:translate3d(-50%,0,0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-marquee.is-ready .hero-marquee-track{ animation:none; }
+  }
+
+  .hero-logo{
+    position:relative; z-index:1;
+    width:min(280px, 70vw); height:auto;
+    opacity:0; transform:scale(0.92) translateY(18px);
+    animation:heroLogo 1.1s var(--ease) 0.15s forwards;
+    filter:drop-shadow(0 10px 28px rgba(21,19,15,0.28));
+  }
+  @keyframes heroLogo{ to{ opacity:1; transform:scale(1) translateY(0);} }
+
+  .eyebrow{
+    position:relative; z-index:2;
+    font-family:'Caveat', cursive; color:var(--sage); font-size:1.5rem; margin-bottom:6px;
+    opacity:0; animation:fadeUp .9s var(--ease) 0.5s forwards;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6vw, 5rem); line-height:1.02; font-weight:500;
+    opacity:0; animation:fadeUp .9s var(--ease) 0.65s forwards;
+  }
+  .hero h1 em{ font-style:italic; color:var(--sage); font-weight:400; }
+  .hero-sub{
+    max-width:560px; margin:26px auto 40px; font-size:1.08rem; color:var(--text-secondary);
+    opacity:0; animation:fadeUp .9s var(--ease) 0.8s forwards;
+  }
+  .hero-ctas{ display:flex; gap:18px; flex-wrap:wrap; justify-content:center;
+    opacity:0; animation:fadeUp .9s var(--ease) 0.95s forwards; margin-bottom:80px; }
+
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:translateY(0);} }
+
+  .scroll-cue{
+    position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    opacity:0; animation:fadeUp 1s var(--ease) 1.3s forwards;
+  }
+  .scroll-cue span{ font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted); }
+  .scroll-line{ width:1px; height:36px; background:linear-gradient(var(--sage), transparent); animation:scrollLine 2s ease-in-out infinite; }
+  @keyframes scrollLine{ 0%{transform:scaleY(0); transform-origin:top;} 50%{transform:scaleY(1); transform-origin:top;} 50.01%{transform-origin:bottom;} 100%{transform:scaleY(0); transform-origin:bottom;} }
+
+  /* ---------- ribbon divider (signature element) ---------- */
+  .ribbon-divider{ display:flex; align-items:center; justify-content:center; padding:0 0 6px; }
+  .ribbon-divider svg{ width:230px; height:auto; opacity:0.9; }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(30px); transition:opacity .9s var(--ease), transform .9s var(--ease); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .stagger > *{ transition-delay:calc(var(--i, 0) * 90ms); }
+
+  /* ---------- section basics ---------- */
+  section{ position:relative; padding:120px 0; }
+  .section-dark{ background:var(--bg-primary); }
+  .section-light{ background:var(--bg-secondary); color:var(--text-primary); }
+  .section-soft{ background:var(--bg-tertiary); }
+  html.dark .section-dark{ background:var(--ink); }
+  html.dark .section-light{ background:var(--parchment); color:var(--ink-on-parchment); }
+  html.dark .section-soft{ background:var(--ink-soft); }
+
+  .kicker{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Caveat', cursive; font-size:1.4rem; color:var(--sage-deep);
+    margin-bottom:10px;
+  }
+  html.dark .section-dark .kicker, html.dark .section-soft .kicker{ color:var(--sage); }
+  .kicker::before{ content:''; width:26px; height:1px; background:currentColor; opacity:0.7; }
+
+  .section-head{ max-width:640px; margin-bottom:64px; }
+  .section-head h2{ font-size:clamp(2rem, 4vw, 2.9rem); }
+  .section-head p{ margin-top:16px; font-size:1.05rem; opacity:0.75; max-width:540px; }
+  .center{ text-align:center; margin-left:auto; margin-right:auto; }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.05fr 0.95fr; gap:72px; align-items:center; }
+  .about-copy p{ color:var(--text-secondary); font-size:1.05rem; margin-bottom:18px; }
+  .about-list{ list-style:none; padding:0; margin:30px 0 0; display:grid; gap:16px; }
+  .about-list li{ display:flex; gap:14px; align-items:flex-start; font-size:0.98rem; color:var(--text-secondary); }
+  .about-list .dot{ width:8px; height:8px; border-radius:50%; background:var(--sage); margin-top:8px; flex:none; }
+
+  .placeholder-img{
+    position:relative; border-radius:4px; overflow:hidden;
+    background:
+      repeating-linear-gradient(135deg, rgba(159,202,159,0.15) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg, var(--bg-secondary), var(--bg-tertiary));
+    border:1px dashed var(--line-color);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    color:var(--text-muted); font-size:0.85rem; letter-spacing:0.02em; padding:24px;
+    transition:transform .6s var(--ease), border-color .4s ease;
+  }
+  html.dark .placeholder-img{
+    background:
+      repeating-linear-gradient(135deg, rgba(159,202,159,0.10) 0 2px, transparent 2px 14px),
+      linear-gradient(160deg, #2b2820, #1c1a15);
+  }
+  .placeholder-img .ph-label{
+    font-family:'Jost',sans-serif; text-transform:uppercase; letter-spacing:0.08em; font-size:0.72rem;
+    color:var(--sage); margin-bottom:8px; display:block;
+  }
+  .placeholder-img .ph-size{ display:block; margin-top:8px; font-size:0.72rem; opacity:0.5; }
+  .placeholder-img:hover{ transform:translateY(-4px); border-color:var(--sage); }
+
+  .about-photo{ aspect-ratio:4/5; }
+
+  /* ---------- services ---------- */
+  .services-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-color);
+    border:1px solid var(--line-color); }
+  .service-card{
+    background:var(--card-bg); padding:42px 30px; position:relative; overflow:hidden;
+    transition:background .45s var(--ease);
+  }
+  html.dark .service-card{ background:var(--ink); }
+  html.dark .service-card:hover{ background:var(--ink-soft); }
+  .service-card::before{
+    content:''; position:absolute; left:0; top:0; height:3px; width:0; background:var(--sage);
+    transition:width .5s var(--ease);
+  }
+  .service-card:hover::before{ width:100%; }
+  .service-card:hover{ background:var(--bg-secondary); }
+  .service-icon{ width:44px; height:44px; margin-bottom:24px; color:var(--sage); }
+  .service-card h3{ font-size:1.25rem; margin-bottom:10px; }
+  .service-card p{ font-size:0.92rem; color:var(--text-muted); margin-bottom:20px; }
+  .service-price{ font-family:'Fraunces', serif; font-style:italic; color:var(--sage); font-size:1rem; }
+
+  /* ---------- gallery ---------- */
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(6, 1fr); grid-auto-rows:120px; gap:14px;
+  }
+  .gallery-grid .placeholder-img{ transition:transform .5s var(--ease), border-color .4s ease; cursor:pointer; }
+  .g1{ grid-column:span 3; grid-row:span 3; }
+  .g2{ grid-column:span 3; grid-row:span 2; }
+  .g3{ grid-column:span 2; grid-row:span 2; }
+  .g4{ grid-column:span 2; grid-row:span 2; }
+  .g5{ grid-column:span 2; grid-row:span 2; }
+  .g6{ grid-column:span 3; grid-row:span 2; }
+  .g7{ grid-column:span 3; grid-row:span 3; }
+  .g8{ grid-column:span 2; grid-row:span 2; }
+  .g9{ grid-column:span 2; grid-row:span 2; }
+  .g10{ grid-column:span 2; grid-row:span 2; }
+
+  .gallery-note{ margin-top:34px; font-size:0.9rem; color:var(--text-muted); text-align:center; }
+
+  /* ---------- team ---------- */
+  .team-grid{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:64px; align-items:center; }
+  .team-photo{ aspect-ratio:3/4; }
+  .team-quote{
+    font-family:'Fraunces', serif; font-style:italic; font-size:1.5rem; line-height:1.4;
+    color:var(--ink-on-parchment); margin-bottom:22px;
+  }
+  .team-name{ font-weight:600; }
+  .team-role{ color:var(--sage-deep); font-size:0.9rem; text-transform:uppercase; letter-spacing:0.06em; margin-top:2px; }
+
+  /* ---------- testimonials ---------- */
+  .test-track-wrap{ overflow:hidden; }
+  .test-track{ display:flex; gap:26px; }
+  .test-card{
+    flex:0 0 340px; background:var(--card-bg); border:1px solid var(--line-color); border-radius:6px;
+    padding:34px; display:flex; flex-direction:column; gap:18px;
+  }
+  html.dark .test-card{ background:var(--ink-soft); }
+  .stars{ color:var(--sage); letter-spacing:2px; font-size:0.95rem; }
+  .test-card p.quote{ font-size:0.98rem; color:var(--text-secondary); flex:1; }
+  .test-who{ display:flex; align-items:center; gap:12px; }
+  .test-avatar{ width:38px; height:38px; border-radius:50%; background:var(--sage-pale); display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; color:var(--ink); font-size:0.95rem;}
+  .test-who div span{ display:block; }
+  .test-who .tname{ font-size:0.92rem; font-weight:500; }
+  .test-who .tdog{ font-size:0.8rem; color:var(--text-muted); }
+
+  /* ---------- faq ---------- */
+  .faq-list{ max-width:760px; margin:0 auto; }
+  .faq-item{ border-bottom:1px solid var(--line-color); }
+  .faq-q{
+    width:100%; text-align:left; background:none; border:none; color:var(--text-primary);
+    font-family:'Fraunces', serif; font-size:1.15rem; padding:26px 4px; cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center; gap:20px;
+  }
+  .faq-q .plus{
+    flex:none; width:24px; height:24px; position:relative;
+  }
+  .faq-q .plus::before, .faq-q .plus::after{
+    content:''; position:absolute; background:var(--sage); top:50%; left:50%; transform:translate(-50%,-50%);
+  }
+  .faq-q .plus::before{ width:14px; height:1.5px; }
+  .faq-q .plus::after{ width:1.5px; height:14px; transition:transform .4s var(--ease); }
+  .faq-item.open .plus::after{ transform:translate(-50%,-50%) rotate(90deg) scaleY(0); }
+  .faq-item.open .faq-q{ color:var(--sage); }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .5s var(--ease); }
+  .faq-a-inner{ padding:0 4px 26px; color:var(--text-muted); font-size:0.95rem; font-style:italic; }
+
+  /* ---------- location ---------- */
+  .location-grid{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:stretch; }
+  .map-placeholder{ aspect-ratio:auto; height:100%; min-height:360px; }
+  .hours-table{ width:100%; border-collapse:collapse; margin-top:26px; }
+  .hours-table tr{ border-bottom:1px solid rgba(34,31,24,0.12); }
+  .hours-table td{ padding:12px 0; font-size:0.98rem; }
+  .hours-table td:last-child{ text-align:right; color:var(--sage-deep); font-weight:500; }
+  .addr-block{ margin-top:22px; font-size:0.98rem; line-height:1.8; opacity:0.85; }
+  .addr-block b{ display:block; font-family:'Fraunces', serif; font-size:1.1rem; margin-bottom:4px; }
+
+  /* ---------- booking ---------- */
+  .booking-wrap{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px; }
+  .booking-copy h2{ font-size:clamp(2rem,4vw,2.8rem); margin-bottom:18px; }
+  .booking-copy p{ color:var(--text-secondary); margin-bottom:26px; }
+  .booking-points{ list-style:none; padding:0; display:grid; gap:14px; }
+  .booking-points li{ display:flex; gap:12px; font-size:0.95rem; color:var(--text-secondary); }
+
+  form.booking-form{
+    background:var(--form-bg); color:var(--ink-on-parchment); border-radius:8px; padding:44px;
+    display:grid; grid-template-columns:1fr 1fr; gap:20px;
+  }
+  .field{ display:flex; flex-direction:column; gap:8px; }
+  .field.full{ grid-column:1 / -1; }
+  .field label{ font-size:0.78rem; text-transform:uppercase; letter-spacing:0.07em; opacity:0.65; }
+  .field input, .field select, .field textarea{
+    font-family:'Jost', sans-serif; font-size:0.98rem; padding:12px 4px; border:none; border-bottom:1.5px solid rgba(34,31,24,0.25);
+    background:transparent; color:var(--ink-on-parchment); transition:border-color .35s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--sage-deep); outline:none; }
+  .field textarea{ resize:vertical; min-height:70px; }
+  .booking-form .btn-ribbon{ margin-top:6px; }
+  .form-note{ grid-column:1/-1; font-size:0.78rem; opacity:0.55; margin-top:-6px; }
+
+  /* ---------- footer ---------- */
+  footer{ background:var(--bg-tertiary); padding:70px 0 30px; border-top:1px solid var(--line-color); }
+  html.dark footer{ background:var(--ink-soft); }
+  .footer-grid{ display:grid; grid-template-columns:1.3fr 0.8fr 0.8fr 1fr; gap:50px; margin-bottom:60px; }
+  .footer-brand{ display:flex; gap:14px; align-items:center; margin-bottom:16px; }
+  .footer-brand img{ width:72px; height:72px; object-fit:contain; }
+  .footer-brand b{ font-family:'Fraunces', serif; font-size:1.15rem; }
+  footer p.desc{ font-size:0.92rem; color:var(--text-muted); max-width:280px; }
+  footer h4{ font-family:'Jost',sans-serif; font-weight:500; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--sage); margin-bottom:18px; }
+  footer ul{ list-style:none; padding:0; margin:0; display:grid; gap:11px; }
+  footer ul a{ font-size:0.92rem; color:var(--text-secondary); transition:color .3s ease, padding-left .3s ease; }
+  footer ul a:hover{ color:var(--sage); padding-left:4px; }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:28px; border-top:1px solid var(--line-color);
+    font-size:0.82rem; color:var(--text-muted); flex-wrap:wrap; gap:12px; }
+
+  /* ---------- misc ---------- */
+  .badge-row{ display:flex; gap:34px; flex-wrap:wrap; margin-top:54px; opacity:0.75; }
+  .badge-row .badge{ display:flex; align-items:center; gap:10px; font-size:0.85rem; }
+  .badge-row svg{ width:20px; height:20px; color:var(--sage); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 980px){
+    .about-grid, .team-grid, .location-grid, .booking-wrap{ grid-template-columns:1fr; }
+    .team-grid{ display:flex; flex-direction:column-reverse; }
+    .services-grid{ grid-template-columns:repeat(2,1fr); }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+    form.booking-form{ grid-template-columns:1fr; }
+    .field.full{ grid-column:1; }
+  }
+  @media (max-width: 720px){
+    .burger{ display:flex; }
+    .nav-cta .btn-ribbon{ display:none; }
+    nav.links{
+      display:none; position:fixed; inset:88px 16px auto 16px;
+      background:var(--nav-bg); backdrop-filter:blur(10px);
+      border:1px solid var(--line-color); border-radius:10px;
+      flex-direction:column; gap:0; padding:12px;
+    }
+    nav.links.open{ display:flex; }
+    nav.links a{ padding:14px 12px; opacity:1; }
+    .gallery-grid{ grid-template-columns:repeat(2,1fr); grid-auto-rows:140px; }
+    .g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8,.g9,.g10{ grid-column:span 2; grid-row:span 2; }
+    .services-grid{ grid-template-columns:1fr; }
+    section{ padding:84px 0; }
+    .footer-grid{ grid-template-columns:1fr; gap:36px; }
+  }
+</style>
+</head>
+<body class="has-demo-bar">
+
+<div class="grain"></div>
+<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop photos/videos into <strong>media/</strong> as <strong>gallery-01</strong> … <strong>10</strong> (<strong>.jpg</strong> / <strong>.mp4</strong>), plus <strong>about.jpg</strong> and <strong>team.jpg</strong>.</div>
+
+<!-- NAV -->
+<header class="site" id="siteHeader">
+  <div class="wrap nav-row">
+    <a href="#top" class="brand">
+      <img src="https://sjwross.github.io/pawsofkilmacolm/assets/paws-logo.png" alt="Paws of Kilmacolm logo">
+      <span class="brand-text"><b>Paws of Kilmacolm</b><span>dog grooming salon</span></span>
+    </a>
+    <nav class="links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#faq">FAQ</a>
+      <a href="#location">Visit</a>
+    </nav>
+    <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">
+        <svg class="icon sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="#booking" class="btn-ribbon">Book a groom</a>
+      <button class="burger" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-glow"></div>
+  <div class="hero-rings" aria-hidden="true">
+    <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet">
+      <circle cx="500" cy="430" r="330" fill="none" stroke="#9fca9f" stroke-opacity="0.15" stroke-width="1"/>
+      <circle cx="500" cy="430" r="410" fill="none" stroke="#9fca9f" stroke-opacity="0.08" stroke-width="1"/>
+    </svg>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-logo-stage">
+      <div class="hero-marquee" id="heroMarquee" aria-hidden="true">
+        <div class="hero-marquee-track" id="heroMarqueeTrack"></div>
+      </div>
+      <img src="https://sjwross.github.io/pawsofkilmacolm/assets/paws-logo.png" alt="Paws of Kilmacolm — dog grooming salon logo" class="hero-logo">
+    </div>
+    <div class="eyebrow">est. in the village of Kilmacolm</div>
+    <h1>A calmer kind of<br><em>groom.</em></h1>
+    <p class="hero-sub">A quiet, salon-based grooming studio for dogs who'd rather not be rushed — and the owners who love them. Gentle handling, unhurried appointments, one dog at a time.</p>
+    <div class="hero-ctas">
+      <a href="#booking" class="btn-ribbon">Book an appointment</a>
+      <a href="#services" class="btn-ribbon">See our services</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="ribbon-divider section-dark">
+  <svg viewBox="0 0 240 40" fill="none">
+    <path d="M4 20 C 40 4, 200 4, 236 20 C 200 36, 40 36, 4 20 Z" stroke="var(--sage)" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="20" y1="20" x2="220" y2="20" stroke="var(--sage)" stroke-opacity="0.35" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ABOUT -->
+<section class="section-dark" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="reveal about-copy">
+        <div class="kicker">our philosophy</div>
+        <h2>Grooming, at a dog's pace.</h2>
+        <p>Paws of Kilmacolm was built around one idea: a groom should feel like a spa afternoon, not an ordeal. Our salon runs on quiet, natural light, low noise, and appointments that are never double-booked — so every dog gets our full attention, start to finish.</p>
+        <p>We work with nervous first-timers, elderly dogs, and everything in between, at a pace set by them rather than the clock.</p>
+        <ul class="about-list">
+          <li><span class="dot"></span> One dog in the salon at a time — no queues, no crates stacked in a back room.</li>
+          <li><span class="dot"></span> Low-noise dryers and handling techniques suited to anxious or elderly dogs.</li>
+          <li><span class="dot"></span> Products chosen for sensitive skin and coats, breed by breed.</li>
+        </ul>
+      </div>
+      <div class="reveal placeholder-img about-photo" data-photo="https://sjwross.github.io/pawsofkilmacolm/media/about.jpg" data-alt="Groomed spaniel on the table at Paws of Kilmacolm, with the salon neon sign on the foliage wall">
+        <div>
+          <span class="ph-label">Instagram photo</span>
+          Salon interior — drop <b>media/about.jpg</b> from @pawsofkilmacolm
+          <span class="ph-size">Recommended: 900 × 1125px (4:5)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ribbon-divider section-soft">
+  <svg viewBox="0 0 240 40" fill="none">
+    <path d="M4 20 C 40 4, 200 4, 236 20 C 200 36, 40 36, 4 20 Z" stroke="var(--sage)" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="20" y1="20" x2="220" y2="20" stroke="var(--sage)" stroke-opacity="0.35" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- SERVICES -->
+<section class="section-soft" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">what we offer</div>
+      <h2>Services &amp; treatments</h2>
+      <p>Every groom starts with a quick health-and-coat check, so we can tailor the visit to your dog on the day — not just the breed on file.</p>
+    </div>
+    <div class="services-grid reveal stagger" id="servicesGrid">
+      <div class="service-card" style="--i:0">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M24 6c-7 0-12 6-12 13 0 9 6 16 12 21 6-5 12-12 12-21 0-7-5-13-12-13Z"/><circle cx="24" cy="19" r="4"/></svg>
+        <h3>Full Groom</h3>
+        <p>Bath, blow-dry, breed-appropriate trim, ears, nails and a finishing spritz. Our most popular visit.</p>
+        <div class="service-price">from £45</div>
+      </div>
+      <div class="service-card" style="--i:1">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 24c0-8 6-16 14-16s14 8 14 16"/><path d="M8 24h32v6a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4v-6Z"/></svg>
+        <h3>Bath &amp; Tidy</h3>
+        <p>A wash, dry and light tidy-up around the face, feet and hygiene areas. Great between full grooms.</p>
+        <div class="service-price">from £28</div>
+      </div>
+      <div class="service-card" style="--i:2">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M24 8v6M24 34v6M8 24h6M34 24h6"/><circle cx="24" cy="24" r="10"/></svg>
+        <h3>Puppy Intro Groom</h3>
+        <p>A short, reward-led first visit designed to build confidence before their coat needs real work.</p>
+        <div class="service-price">from £20</div>
+      </div>
+      <div class="service-card" style="--i:3">
+        <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 14c4-4 8-2 8 4 0 4-4 6-4 6M34 14c-4-4-8-2-8 4"/><circle cx="18" cy="30" r="3"/><circle cx="30" cy="30" r="3"/></svg>
+        <h3>Nails &amp; Ears</h3>
+        <p>A quick, standalone appointment for nail trims, filing and ear cleaning — no bath required.</p>
+        <div class="service-price">from £14</div>
+      </div>
+    </div>
+    <div class="badge-row reveal">
+      <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg> Fully insured &amp; qualified groomers</div>
+      <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg> Cruelty-free, allergy-conscious products</div>
+      <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12l5 5L20 6"/></svg> By appointment only</div>
+    </div>
+  </div>
+</section>
+
+<div class="ribbon-divider section-dark">
+  <svg viewBox="0 0 240 40" fill="none">
+    <path d="M4 20 C 40 4, 200 4, 236 20 C 200 36, 40 36, 4 20 Z" stroke="var(--sage)" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="20" y1="20" x2="220" y2="20" stroke="var(--sage)" stroke-opacity="0.35" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- GALLERY -->
+<section class="section-dark" id="gallery">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">paws in progress</div>
+      <h2>Recent grooms</h2>
+      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>.</p>
+    </div>
+    <div class="gallery-grid reveal stagger" id="galleryGrid">
+      <div class="placeholder-img g1" style="--i:0" data-gallery-slot="1" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g2" style="--i:1" data-gallery-slot="2" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-02</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g3" style="--i:2" data-gallery-slot="3" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-03</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g4" style="--i:3" data-gallery-slot="4" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-04</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g5" style="--i:4" data-gallery-slot="5" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-05</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g6" style="--i:5" data-gallery-slot="6" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-06</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g7" style="--i:6" data-gallery-slot="7" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-07</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g8" style="--i:7" data-gallery-slot="8" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-08</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g9" style="--i:8" data-gallery-slot="9" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-09</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+      <div class="placeholder-img g10" style="--i:9" data-gallery-slot="10" data-alt="Salon video from Paws of Kilmacolm"><div><span class="ph-label">gallery-10</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
+    </div>
+    <div class="ig-strip reveal">
+      <span class="ig-handle">@pawsofkilmacolm</span>
+      <a class="btn-ribbon ghost" href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">Follow on Instagram</a>
+    </div>
+    <p class="gallery-note reveal">Ask owners before featuring their dog. Instagram captions can become alt text after the demo.</p>
+  </div>
+</section>
+
+<div class="ribbon-divider section-light">
+  <svg viewBox="0 0 240 40" fill="none">
+    <path d="M4 20 C 40 4, 200 4, 236 20 C 200 36, 40 36, 4 20 Z" stroke="var(--sage-deep)" stroke-opacity="0.6" stroke-width="1"/>
+    <line x1="20" y1="20" x2="220" y2="20" stroke="var(--sage-deep)" stroke-opacity="0.4" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- TEAM -->
+<section class="section-light">
+  <div class="wrap">
+    <div class="team-grid">
+      <div class="reveal">
+        <div class="kicker">meet your groomer</div>
+        <p class="team-quote">"Half of good grooming is a dog who trusts you. We spend as much time on that as we do on the scissors."</p>
+        <div class="team-name">Founder &amp; Head Groomer <span class="draft-tag">name to confirm</span></div>
+        <div class="team-role">City &amp; Guilds Qualified · Kilmacolm</div>
+        <p style="margin-top:22px; opacity:0.75; font-size:0.98rem;">Draft bio for the demo: a Kilmacolm groomer working one dog at a time, with a particular patience for nervous first-timers and older coats. Swap this for training background, years of experience, and the breeds you love most.</p>
+      </div>
+      <div class="reveal placeholder-img team-photo" data-photo="https://sjwross.github.io/pawsofkilmacolm/media/team.jpg" data-alt="Groomer at Paws of Kilmacolm holding a small curly-coated dog in a gingham bandana, foliage wall and neon sign behind">
+        <div>
+          <span class="ph-label">Instagram photo</span>
+          Groomer portrait — drop <b>media/team.jpg</b>
+          <span class="ph-size">Recommended: 900 × 1200px (3:4)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ribbon-divider section-soft">
+  <svg viewBox="0 0 240 40" fill="none">
+    <path d="M4 20 C 40 4, 200 4, 236 20 C 200 36, 40 36, 4 20 Z" stroke="var(--sage)" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="20" y1="20" x2="220" y2="20" stroke="var(--sage)" stroke-opacity="0.35" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="section-soft">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="kicker">kind words</div>
+      <h2>From dogs &amp; their people</h2>
+      <p>Sample layout copy for the demo — replace with real Google / Facebook reviews before launch.</p>
+    </div>
+  </div>
+  <div class="wrap test-track-wrap reveal">
+    <div class="test-track" id="testTrack">
+      <div class="test-card"><div class="stars">★★★★★</div><p class="quote">Our terrier is terrified of the dryer everywhere else. Here he practically falls asleep on the table.</p><div class="test-who"><div class="test-avatar">F</div><div><span class="tname">Fiona R.</span><span class="tdog">Border Terrier, Angus</span></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="quote">No queue of barking dogs, no rush — just one appointment, done properly, every time.</p><div class="test-who"><div class="test-avatar">D</div><div><span class="tname">David M.</span><span class="tdog">Cockapoo, Biscuit</span></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="quote">Our old girl has bad hips and they were so patient getting her comfortable on the table.</p><div class="test-who"><div class="test-avatar">S</div><div><span class="tname">Sheila K.</span><span class="tdog">Labrador, Bramble</span></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="quote">Booking was easy and they actually text you a reminder the day before. Small thing, appreciated.</p><div class="test-who"><div class="test-avatar">A</div><div><span class="tname">Ailsa T.</span><span class="tdog">Schnauzer, Hamish</span></div></div></div>
+      <div class="test-card"><div class="stars">★★★★★</div><p class="quote">Best hand-strip our Westie has ever had, and he's normally a nightmare for groomers.</p><div class="test-who"><div class="test-avatar">C</div><div><span class="tname">Craig B.</span><span class="tdog">West Highland Terrier, Toby</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="ribbon-divider section-dark">
+  <svg viewBox="0 0 240 40" fill="none">
+    <path d="M4 20 C 40 4, 200 4, 236 20 C 200 36, 40 36, 4 20 Z" stroke="var(--sage)" stroke-opacity="0.5" stroke-width="1"/>
+    <line x1="20" y1="20" x2="220" y2="20" stroke="var(--sage)" stroke-opacity="0.35" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- FAQ -->
+<section class="section-dark" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal center">
+      <div class="kicker">good to know</div>
+      <h2>Frequently asked questions</h2>
+      <p>Draft answers for the walkthrough — confirm anything that should stay before this goes live.</p>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How often should my dog be groomed?<span class="plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Most coats are happiest on a 6–8 week rhythm. Doodles, poodle mixes and anything that mats can need 4–6 weeks. We'll look at the coat on the day and suggest a schedule that keeps them comfortable rather than a calendar that suits us.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you groom nervous or reactive dogs?<span class="plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — that's a large part of why the salon is one dog at a time. First visits are slower, reward-led, and never forced through a dryer or table if your dog isn't ready. Tell us what they find hard (clippers, nails, other dogs) when you book.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What should I bring to my dog's first appointment?<span class="plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Your dog, any usual treats, and a note of health quirks (skin, hips, ears, heart). If you have a preferred clip or a photo of a previous groom, bring that too. We'll confirm vaccination requirements with you before the first visit.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How long does a full groom take?<span class="plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Typically between 1½ and 3 hours, depending on coat, condition and how your dog likes to work. We don't double-book, so the appointment is theirs until they're finished — not until the next dog is due on the table.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you require up-to-date vaccinations?<span class="plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Draft: we ask that dogs are up to date with core vaccinations, or that you discuss titre tests / medical exemptions with us in advance. Confirm the exact policy before launch.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What is your cancellation policy?<span class="plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Please give 24 hours' notice if you need to move an appointment, so we can offer the slot to another dog. Late cancellations may be charged — we'll confirm the exact terms with you.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Can I stay with my dog during the groom?<span class="plus"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">Most dogs settle better without an audience, so we usually work one-to-one in the salon. If your dog is very young, elderly or anxious, say so when you book and we'll agree what will help them most.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ribbon-divider section-light">
+  <svg viewBox="0 0 240 40" fill="none">
+    <path d="M4 20 C 40 4, 200 4, 236 20 C 200 36, 40 36, 4 20 Z" stroke="var(--sage-deep)" stroke-opacity="0.6" stroke-width="1"/>
+    <line x1="20" y1="20" x2="220" y2="20" stroke="var(--sage-deep)" stroke-opacity="0.4" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- LOCATION -->
+<section class="section-light" id="location">
+  <div class="wrap">
+    <div class="location-grid">
+      <div class="reveal">
+        <div class="kicker">find the salon</div>
+        <h2 style="font-size:clamp(2rem,4vw,2.7rem);">Tucked into the village</h2>
+        <p style="margin-top:16px; opacity:0.75;">In the village of Kilmacolm, Inverclyde — exact street and parking notes to confirm at the demo. The map currently shows the village centre.</p>
+        <table class="hours-table">
+          <tr><td>Monday</td><td>Closed <span class="draft-tag">draft</span></td></tr>
+          <tr><td>Tuesday – Friday</td><td>9:00 – 17:00</td></tr>
+          <tr><td>Saturday</td><td>9:00 – 15:00</td></tr>
+          <tr><td>Sunday</td><td>Closed</td></tr>
+        </table>
+        <div class="addr-block">
+          <b>Paws of Kilmacolm</b>
+          Street address to confirm<br>
+          Kilmacolm, Inverclyde, Scotland<br>
+          Book via Instagram · <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <iframe class="map-frame" title="Map of Kilmacolm village" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=-4.6405%2C55.8875%2C-4.6165%2C55.9015&amp;layer=mapnik&amp;marker=55.8947%2C-4.6278"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="section-dark" id="booking" style="padding-top:100px;">
+  <div class="wrap">
+    <div class="booking-wrap">
+      <div class="reveal booking-copy">
+        <div class="kicker">ready when you are</div>
+        <h2>Book your dog's next visit</h2>
+        <p>Tell us a little about your dog and preferred times, and we'll confirm your appointment directly — usually within one working day.</p>
+        <ul class="booking-points">
+          <li><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--sage);margin-top:7px;flex:none;"></span> New clients: a short call before your first visit, just to say hello.</li>
+          <li><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--sage);margin-top:7px;flex:none;"></span> Reminders sent by text the day before.</li>
+          <li><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--sage);margin-top:7px;flex:none;"></span> 24 hours' notice for cancellations, please.</li>
+        </ul>
+      </div>
+      <form class="booking-form reveal" id="bookingForm">
+        <div class="field">
+          <label for="ownerName">Your name</label>
+          <input id="ownerName" type="text" placeholder="Jane Campbell" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input id="phone" type="tel" placeholder="07xxx xxxxxx" required>
+        </div>
+        <div class="field">
+          <label for="dogName">Dog's name</label>
+          <input id="dogName" type="text" placeholder="Bramble">
+        </div>
+        <div class="field">
+          <label for="breed">Breed / coat type</label>
+          <input id="breed" type="text" placeholder="Cockapoo">
+        </div>
+        <div class="field">
+          <label for="service">Service</label>
+          <select id="service">
+            <option>Full Groom</option>
+            <option>Bath &amp; Tidy</option>
+            <option>Puppy Intro Groom</option>
+            <option>Nails &amp; Ears</option>
+            <option>Not sure — advise me</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="date">Preferred date</label>
+          <input id="date" type="date">
+        </div>
+        <div class="field full">
+          <label for="notes">Anything we should know?</label>
+          <textarea id="notes" placeholder="Temperament, health notes, matting, or anything else that helps us prepare."></textarea>
+        </div>
+        <div class="field full">
+          <button type="submit" class="btn-ribbon" style="width:100%;">Request appointment</button>
+        </div>
+        <p class="form-note">Demo form — it prepares an email / Instagram message. Connect booking software or a real inbox before launch.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="https://sjwross.github.io/pawsofkilmacolm/assets/paws-logo.png" alt="Paws of Kilmacolm logo">
+          <b>Paws of Kilmacolm</b>
+        </div>
+        <p class="desc">A calm, salon-based dog grooming studio in Kilmacolm, Scotland. One dog at a time, at their own pace.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="#location">Location &amp; hours</a></li>
+          <li><a href="#booking">Book an appointment</a></li>
+          <li><a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">Instagram DM</a></li>
+          <li><a href="#booking">Book an appointment</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Follow along</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">Instagram — @pawsofkilmacolm</a></li>
+          <li><a href="#booking">Request a visit</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Paws of Kilmacolm. All rights reserved.</span>
+      <span>Kilmacolm, Inverclyde, Scotland</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // sticky nav solidify
+  const header = document.getElementById('siteHeader');
+  const onScroll = () => {
+    if(window.scrollY > 60){ header.classList.add('solid'); } else { header.classList.remove('solid'); }
+  };
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // mobile nav
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if(navToggle && navLinks){
+    navToggle.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded','false');
+    }));
+  }
+
+  // ---------- media helpers (photos + videos) ----------
+  const IMAGE_EXTS = ['.jpg', '.png'];
+  const VIDEO_EXTS = ['.mp4', '.webm'];
+  const isVideoPath = (src) => /\.(mp4|webm|mov)(?:\?|$)/i.test(src);
+
+  const urlExists = async (path) => {
+    try {
+      const head = await fetch(path, { method: 'HEAD', cache: 'no-cache' });
+      if(head.ok) return true;
+      if(head.status === 405 || head.status === 501){
+        const ranged = await fetch(path, {
+          method: 'GET',
+          headers: { Range: 'bytes=0-0' },
+          cache: 'no-cache'
+        });
+        return ranged.ok || ranged.status === 206;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  };
+
+  const tryImage = (src) => new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve({ type: 'image', src, el: img });
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+
+  const tryVideo = (src) => new Promise((resolve) => {
+    const video = document.createElement('video');
+    let settled = false;
+    const done = (ok) => {
+      if(settled) return;
+      settled = true;
+      video.onloadeddata = null;
+      video.onloadedmetadata = null;
+      video.onerror = null;
+      resolve(ok ? { type: 'video', src, el: video } : null);
+    };
+    video.preload = 'metadata';
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('muted', '');
+    video.loop = true;
+    video.onloadeddata = () => done(true);
+    video.onloadedmetadata = () => done(true);
+    video.onerror = () => done(false);
+    video.src = src;
+    setTimeout(() => done(false), 4000);
+  });
+
+  const probePath = async (path) => {
+    if(!(await urlExists(path))) return null;
+    if(isVideoPath(path)) return tryVideo(path);
+    return tryImage(path);
+  };
+
+  const firstExisting = async (paths) => {
+    for(const path of paths){
+      const hit = await probePath(path);
+      if(hit) return hit;
+    }
+    return null;
+  };
+
+  const galleryCandidatePaths = (n) => {
+    const base = `https://sjwross.github.io/pawsofkilmacolm/media/gallery-${String(n).padStart(2,'0')}`;
+    // Prefer video when both exist
+    return [
+      ...VIDEO_EXTS.map((ext) => base + ext),
+      ...IMAGE_EXTS.map((ext) => base + ext),
+    ];
+  };
+
+  const fillSlotWithMedia = (el, media) => {
+    if(!el || !media) return;
+    const alt = el.getAttribute('data-alt') || '';
+    el.classList.add('has-photo');
+    el.innerHTML = '';
+    if(media.type === 'video'){
+      const video = media.el || document.createElement('video');
+      video.src = media.src;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('muted', '');
+      video.setAttribute('autoplay', '');
+      video.loop = true;
+      video.autoplay = true;
+      video.preload = 'auto';
+      video.setAttribute('aria-label', alt);
+      el.appendChild(video);
+      const play = () => { video.play().catch(() => {}); };
+      play();
+      video.addEventListener('canplay', play, { once:true });
+    } else {
+      const img = media.el || new Image();
+      img.src = media.src;
+      img.alt = alt;
+      el.appendChild(img);
+    }
+  };
+
+  // Named section photos (about / team)
+  document.querySelectorAll('[data-photo]').forEach(async (el) => {
+    const src = el.getAttribute('data-photo');
+    const loaded = await probePath(src);
+    if(!loaded) return;
+    fillSlotWithMedia(el, loaded);
+  });
+
+  // Gallery + hero marquee bootstrap
+  (async () => {
+    const galleryItems = [];
+    const gallerySlots = Array.from(document.querySelectorAll('[data-gallery-slot]'));
+    await Promise.all(gallerySlots.map(async (el) => {
+      const n = Number(el.getAttribute('data-gallery-slot'));
+      const media = await firstExisting(galleryCandidatePaths(n));
+      if(!media) return;
+      fillSlotWithMedia(el, media);
+      galleryItems.push({ ...media, slot: n, alt: el.getAttribute('data-alt') || '' });
+    }));
+    galleryItems.sort((a, b) => a.slot - b.slot);
+
+    const track = document.getElementById('heroMarqueeTrack');
+    const wrap = document.getElementById('heroMarquee');
+    if(!track || !wrap) return;
+
+    const videos = galleryItems.filter((m) => m.type === 'video');
+    const photos = galleryItems.filter((m) => m.type === 'image');
+    // Prefer videos for the strip; add gallery photos only if needed to fill horizontally
+    let strip = videos.length >= 3 ? [...videos] : [...videos, ...photos];
+
+    if(strip.length < 3){
+      const extras = ['https://sjwross.github.io/pawsofkilmacolm/media/about.jpg', 'https://sjwross.github.io/pawsofkilmacolm/media/team.jpg'];
+      for(const path of extras){
+        if(strip.some((m) => m.src.split('?')[0] === path)) continue;
+        const hit = await probePath(path);
+        if(hit) strip.push({ ...hit, alt: 'Paws of Kilmacolm salon photo' });
+      }
+    }
+
+    const seen = new Set();
+    strip = strip.filter((m) => {
+      const key = m.src.split('?')[0];
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    if(!strip.length) return;
+
+    const makeItem = (media) => {
+      const item = document.createElement('div');
+      item.className = 'hero-marquee-item';
+      if(media.type === 'video'){
+        const video = document.createElement('video');
+        video.src = media.src;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('autoplay', '');
+        video.loop = true;
+        video.autoplay = true;
+        video.preload = 'auto';
+        video.setAttribute('aria-hidden', 'true');
+        // Hint decoder to keep a small buffer while sliding
+        try { video.disableRemotePlayback = true; } catch (_) {}
+        item.appendChild(video);
+      } else {
+        const img = document.createElement('img');
+        img.src = media.src;
+        img.alt = '';
+        img.decoding = 'async';
+        img.loading = 'eager';
+        item.appendChild(img);
+      }
+      return item;
+    };
+
+    track.innerHTML = '';
+    const paint = (list) => {
+      list.forEach((m) => track.appendChild(makeItem(m)));
+    };
+
+    // First half: unique strip, pad with photos (not extra video clones) if narrow
+    let unit = strip.slice();
+    paint(unit);
+    const photoPad = photos.length ? photos : strip.filter((m) => m.type === 'image');
+    let guard = 0;
+    while(track.scrollWidth < window.innerWidth * 1.05 && guard < 6){
+      if(photoPad.length){
+        paint([photoPad[guard % photoPad.length]]);
+      } else {
+        paint(unit);
+      }
+      guard += 1;
+    }
+
+    // Exact duplicate of current first-half nodes via fresh media nodes (keeps videos healthy)
+    const firstHalf = Array.from(track.children).map((node, idx) => {
+      const vid = node.querySelector('video');
+      const img = node.querySelector('img');
+      if(vid) return { type: 'video', src: vid.currentSrc || vid.src };
+      return { type: 'image', src: img.currentSrc || img.src };
+    });
+    firstHalf.forEach((m) => track.appendChild(makeItem(m)));
+
+    const playAll = () => {
+      track.querySelectorAll('video').forEach((v) => {
+        v.muted = true;
+        if(v.paused) v.play().catch(() => {});
+      });
+    };
+    playAll();
+    document.addEventListener('visibilitychange', () => {
+      if(!document.hidden) playAll();
+    });
+    setInterval(playAll, 8000);
+
+    requestAnimationFrame(() => {
+      const halfWidth = track.scrollWidth / 2;
+      const pxPerSec = 32;
+      const duration = Math.max(36, halfWidth / pxPerSec);
+      wrap.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+      wrap.classList.add('is-ready');
+      playAll();
+    });
+  })();
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // stagger index assignment fallback for children without explicit --i
+  document.querySelectorAll('.stagger').forEach(group => {
+    Array.from(group.children).forEach((child, idx) => {
+      if(!child.style.getPropertyValue('--i')) child.style.setProperty('--i', idx);
+    });
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(openItem => {
+        if(openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-a').style.maxHeight = null;
+          openItem.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        a.style.maxHeight = null;
+        q.setAttribute('aria-expanded','false');
+      } else {
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+        q.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  // testimonial auto-scroll (gentle, pauses on hover, respects reduced motion)
+  const track = document.getElementById('testTrack');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(track && !prefersReduced){
+    let paused = false;
+    track.addEventListener('mouseenter', () => paused = true);
+    track.addEventListener('mouseleave', () => paused = false);
+    let pos = 0;
+    function step(){
+      if(!paused){
+        pos += 0.4;
+        if(pos >= track.scrollWidth / 2){ pos = 0; }
+        track.style.transform = `translateX(${-pos}px)`;
+      }
+      requestAnimationFrame(step);
+    }
+    // duplicate cards for seamless loop
+    track.innerHTML += track.innerHTML;
+    requestAnimationFrame(step);
+  }
+
+  // booking form (demo): copy a message and open Instagram
+  const bookingForm = document.getElementById('bookingForm');
+  bookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = (id) => (document.getElementById(id)?.value || '').trim();
+    const msg = [
+      'Paws of Kilmacolm booking request',
+      `Name: ${val('ownerName')}`,
+      `Phone: ${val('phone')}`,
+      `Dog: ${val('dogName')} (${val('breed')})`,
+      `Service: ${val('service')}`,
+      `Preferred date: ${val('date')}`,
+      `Notes: ${val('notes')}`
+    ].join('\n');
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(msg).catch(() => {});
+    }
+    const btn = bookingForm.querySelector('button[type="submit"]');
+    const original = btn.textContent;
+    btn.textContent = 'Copied — opening Instagram';
+    btn.style.background = 'var(--sage-deep)';
+    window.open('https://www.instagram.com/pawsofkilmacolm/', '_blank', 'noopener');
+    setTimeout(() => { btn.textContent = original; btn.style.background = ''; }, 2600);
+  });
+
+  // Theme toggle (light mode default)
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'dark'){
+    html.classList.add('dark');
+  }
+  themeToggle.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+  });
+</script>
+
+</body>
+</html>
