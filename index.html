@@ -187,8 +187,13 @@
     background:var(--bg-tertiary);
   }
   html.dark .placeholder-img.has-photo{ background:#1c1a15; }
-  .placeholder-img.has-photo img{
+  .placeholder-img.has-photo img,
+  .placeholder-img.has-photo video{
     width:100%; height:100%; object-fit:cover;
+    display:block;
+  }
+  .placeholder-img.has-photo video{
+    pointer-events:none;
   }
   .about-photo.has-photo img{ object-position: 20% center; }
   .ig-strip{
@@ -219,15 +224,79 @@
   .hero-rings{ position:absolute; inset:0; pointer-events:none; opacity:0.5;}
   .hero-rings svg{ width:100%; height:100%; }
 
-  .hero-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; }
+  .hero-inner{ position:relative; z-index:2; display:flex; flex-direction:column; align-items:center; width:100%; }
+
+  /* Full-bleed media strip behind the dog logo, above the eyebrow */
+  .hero-logo-stage{
+    position:relative;
+    width:100%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:10px;
+    min-height:min(260px, 62vw);
+  }
+  .hero-marquee{
+    position:absolute;
+    left:50%; top:50%;
+    transform:translate(-50%, -50%);
+    width:100vw;
+    height:min(210px, 48vw);
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .8s var(--ease);
+    -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+            mask-image:linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  }
+  .hero-marquee.is-ready{ opacity:1; }
+  .hero-marquee-track{
+    display:flex; align-items:stretch; gap:12px; height:100%;
+    width:max-content;
+    will-change:transform;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+  }
+  .hero-marquee.is-ready .hero-marquee-track{
+    animation:heroMarqueeSlide var(--marquee-duration, 48s) linear infinite;
+  }
+  .hero-marquee-item{
+    flex:0 0 auto;
+    height:100%;
+    width:min(280px, 42vw);
+    border-radius:4px;
+    overflow:hidden;
+    background:var(--bg-tertiary);
+    contain:layout paint;
+  }
+  .hero-marquee-item img,
+  .hero-marquee-item video{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    transform:translateZ(0);
+  }
+  .hero-marquee-item video{
+    background:#1c1a15;
+  }
+  @keyframes heroMarqueeSlide{
+    from{ transform:translate3d(0,0,0); }
+    to{ transform:translate3d(-50%,0,0); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .hero-marquee.is-ready .hero-marquee-track{ animation:none; }
+  }
+
   .hero-logo{
-    width:min(280px, 70vw); height:auto; margin-bottom:18px;
+    position:relative; z-index:1;
+    width:min(280px, 70vw); height:auto;
     opacity:0; transform:scale(0.92) translateY(18px);
     animation:heroLogo 1.1s var(--ease) 0.15s forwards;
+    filter:drop-shadow(0 10px 28px rgba(21,19,15,0.28));
   }
   @keyframes heroLogo{ to{ opacity:1; transform:scale(1) translateY(0);} }
 
   .eyebrow{
+    position:relative; z-index:2;
     font-family:'Caveat', cursive; color:var(--sage); font-size:1.5rem; margin-bottom:6px;
     opacity:0; animation:fadeUp .9s var(--ease) 0.5s forwards;
   }
@@ -482,7 +551,7 @@
 <body class="has-demo-bar">
 
 <div class="grain"></div>
-<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop Instagram photos into <strong>media/</strong> as <strong>gallery-01.jpg</strong> … <strong>07.jpg</strong>, plus <strong>about.jpg</strong> and <strong>team.jpg</strong>.</div>
+<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop photos/videos into <strong>media/</strong> as <strong>gallery-01</strong> … <strong>07</strong> (<strong>.jpg</strong> / <strong>.mp4</strong>), plus <strong>about.jpg</strong> and <strong>team.jpg</strong>.</div>
 
 <!-- NAV -->
 <header class="site" id="siteHeader">
@@ -521,7 +590,12 @@
     </svg>
   </div>
   <div class="hero-inner">
-    <img src="assets/paws-logo.png" alt="Paws of Kilmacolm — dog grooming salon logo" class="hero-logo">
+    <div class="hero-logo-stage">
+      <div class="hero-marquee" id="heroMarquee" aria-hidden="true">
+        <div class="hero-marquee-track" id="heroMarqueeTrack"></div>
+      </div>
+      <img src="assets/paws-logo.png" alt="Paws of Kilmacolm — dog grooming salon logo" class="hero-logo">
+    </div>
     <div class="eyebrow">est. in the village of Kilmacolm</div>
     <h1>A calmer kind of<br><em>groom.</em></h1>
     <p class="hero-sub">A quiet, salon-based grooming studio for dogs who'd rather not be rushed — and the owners who love them. Gentle handling, unhurried appointments, one dog at a time.</p>
@@ -630,14 +704,14 @@
       <h2>Recent grooms</h2>
       <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>.</p>
     </div>
-    <div class="gallery-grid reveal stagger">
-      <div class="placeholder-img g1" style="--i:0" data-photo="media/gallery-01.jpg" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01.jpg</span>Instagram groom photo<span class="ph-size">720 × 720px</span></div></div>
-      <div class="placeholder-img g2" style="--i:1" data-photo="media/gallery-02.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-02.jpg</span>Instagram groom photo<span class="ph-size">720 × 480px</span></div></div>
-      <div class="placeholder-img g3" style="--i:2" data-photo="media/gallery-03.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-03.jpg</span>Instagram groom photo<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g4" style="--i:3" data-photo="media/gallery-04.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-04.jpg</span>Instagram groom photo<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g5" style="--i:4" data-photo="media/gallery-05.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-05.jpg</span>Instagram groom photo<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g6" style="--i:5" data-photo="media/gallery-06.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-06.jpg</span>Instagram groom photo<span class="ph-size">720 × 480px</span></div></div>
-      <div class="placeholder-img g7" style="--i:6" data-photo="media/gallery-07.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-07.jpg</span>Instagram groom photo<span class="ph-size">720 × 720px</span></div></div>
+    <div class="gallery-grid reveal stagger" id="galleryGrid">
+      <div class="placeholder-img g1" style="--i:0" data-gallery-slot="1" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01</span>Instagram groom photo or video<span class="ph-size">720 × 720px</span></div></div>
+      <div class="placeholder-img g2" style="--i:1" data-gallery-slot="2" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-02</span>Instagram groom photo or video<span class="ph-size">720 × 480px</span></div></div>
+      <div class="placeholder-img g3" style="--i:2" data-gallery-slot="3" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-03</span>Instagram groom photo or video<span class="ph-size">480 × 480px</span></div></div>
+      <div class="placeholder-img g4" style="--i:3" data-gallery-slot="4" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-04</span>Instagram groom photo or video<span class="ph-size">480 × 480px</span></div></div>
+      <div class="placeholder-img g5" style="--i:4" data-gallery-slot="5" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-05</span>Instagram groom photo or video<span class="ph-size">480 × 480px</span></div></div>
+      <div class="placeholder-img g6" style="--i:5" data-gallery-slot="6" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-06</span>Instagram groom photo or video<span class="ph-size">720 × 480px</span></div></div>
+      <div class="placeholder-img g7" style="--i:6" data-gallery-slot="7" data-alt="Recent groom from Paws of Kilmacolm"><div><span class="ph-label">gallery-07</span>Instagram groom photo or video<span class="ph-size">720 × 720px</span></div></div>
     </div>
     <div class="ig-strip reveal">
       <span class="ig-handle">@pawsofkilmacolm</span>
@@ -911,26 +985,231 @@
     }));
   }
 
-  // load dropped Instagram / local photos when files exist
-  const tryPhoto = (src) => new Promise((resolve) => {
+  // ---------- media helpers (photos + videos) ----------
+  const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.webp'];
+  const VIDEO_EXTS = ['.mp4', '.webm', '.mov'];
+  const isVideoPath = (src) => /\.(mp4|webm|mov)(?:\?|$)/i.test(src);
+
+  const urlExists = async (path) => {
+    try {
+      const head = await fetch(path, { method: 'HEAD', cache: 'no-cache' });
+      if(head.ok) return true;
+      if(head.status === 405 || head.status === 501){
+        const ranged = await fetch(path, {
+          method: 'GET',
+          headers: { Range: 'bytes=0-0' },
+          cache: 'no-cache'
+        });
+        return ranged.ok || ranged.status === 206;
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  };
+
+  const tryImage = (src) => new Promise((resolve) => {
     const img = new Image();
-    img.onload = () => resolve(img);
+    img.onload = () => resolve({ type: 'image', src, el: img });
     img.onerror = () => resolve(null);
-    img.src = src + (src.includes('?') ? '&' : '?') + 'v=' + Date.now();
+    img.src = src;
   });
+
+  const tryVideo = (src) => new Promise((resolve) => {
+    const video = document.createElement('video');
+    let settled = false;
+    const done = (ok) => {
+      if(settled) return;
+      settled = true;
+      video.onloadeddata = null;
+      video.onloadedmetadata = null;
+      video.onerror = null;
+      resolve(ok ? { type: 'video', src, el: video } : null);
+    };
+    video.preload = 'metadata';
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute('playsinline', '');
+    video.setAttribute('muted', '');
+    video.loop = true;
+    video.onloadeddata = () => done(true);
+    video.onloadedmetadata = () => done(true);
+    video.onerror = () => done(false);
+    video.src = src;
+    setTimeout(() => done(false), 4000);
+  });
+
+  const probePath = async (path) => {
+    if(!(await urlExists(path))) return null;
+    if(isVideoPath(path)) return tryVideo(path);
+    return tryImage(path);
+  };
+
+  const firstExisting = async (paths) => {
+    for(const path of paths){
+      const hit = await probePath(path);
+      if(hit) return hit;
+    }
+    return null;
+  };
+
+  const galleryCandidatePaths = (n) => {
+    const base = `media/gallery-${String(n).padStart(2,'0')}`;
+    // Prefer video when both exist
+    return [
+      ...VIDEO_EXTS.map((ext) => base + ext),
+      ...IMAGE_EXTS.map((ext) => base + ext),
+    ];
+  };
+
+  const fillSlotWithMedia = (el, media) => {
+    if(!el || !media) return;
+    const alt = el.getAttribute('data-alt') || '';
+    el.classList.add('has-photo');
+    el.innerHTML = '';
+    if(media.type === 'video'){
+      const video = media.el || document.createElement('video');
+      video.src = media.src;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('muted', '');
+      video.setAttribute('autoplay', '');
+      video.loop = true;
+      video.autoplay = true;
+      video.preload = 'auto';
+      video.setAttribute('aria-label', alt);
+      el.appendChild(video);
+      const play = () => { video.play().catch(() => {}); };
+      play();
+      video.addEventListener('canplay', play, { once:true });
+    } else {
+      const img = media.el || new Image();
+      img.src = media.src;
+      img.alt = alt;
+      el.appendChild(img);
+    }
+  };
+
+  // Named section photos (about / team)
   document.querySelectorAll('[data-photo]').forEach(async (el) => {
     const src = el.getAttribute('data-photo');
-    const loaded = await tryPhoto(src);
+    const loaded = await probePath(src);
     if(!loaded) return;
-    loaded.alt = el.getAttribute('data-alt') || el.getAttribute('alt') || '';
-    if(el.tagName === 'IMG'){
-      el.src = loaded.src;
-    } else {
-      el.classList.add('has-photo');
-      el.innerHTML = '';
-      el.appendChild(loaded);
-    }
+    fillSlotWithMedia(el, loaded);
   });
+
+  // Gallery + hero marquee bootstrap
+  (async () => {
+    const galleryItems = [];
+    const gallerySlots = Array.from(document.querySelectorAll('[data-gallery-slot]'));
+    await Promise.all(gallerySlots.map(async (el) => {
+      const n = Number(el.getAttribute('data-gallery-slot'));
+      const media = await firstExisting(galleryCandidatePaths(n));
+      if(!media) return;
+      fillSlotWithMedia(el, media);
+      galleryItems.push({ ...media, slot: n, alt: el.getAttribute('data-alt') || '' });
+    }));
+    galleryItems.sort((a, b) => a.slot - b.slot);
+
+    const track = document.getElementById('heroMarqueeTrack');
+    const wrap = document.getElementById('heroMarquee');
+    if(!track || !wrap) return;
+
+    const videos = galleryItems.filter((m) => m.type === 'video');
+    const photos = galleryItems.filter((m) => m.type === 'image');
+    let strip = [...videos, ...photos];
+
+    // Prefer gallery media; if not enough for a full strip, fold in other salon photos
+    if(strip.length < 4){
+      const extras = ['media/about.jpg', 'media/team.jpg'];
+      for(const path of extras){
+        if(strip.some((m) => m.src.split('?')[0] === path)) continue;
+        const hit = await probePath(path);
+        if(hit) strip.push({ ...hit, alt: 'Paws of Kilmacolm salon photo' });
+      }
+    }
+
+    const seen = new Set();
+    strip = strip.filter((m) => {
+      const key = m.src.split('?')[0];
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+
+    if(!strip.length) return;
+
+    const makeItem = (media) => {
+      const item = document.createElement('div');
+      item.className = 'hero-marquee-item';
+      if(media.type === 'video'){
+        const video = document.createElement('video');
+        video.src = media.src;
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('muted', '');
+        video.setAttribute('autoplay', '');
+        video.loop = true;
+        video.autoplay = true;
+        video.preload = 'auto';
+        video.setAttribute('aria-hidden', 'true');
+        item.appendChild(video);
+      } else {
+        const img = document.createElement('img');
+        img.src = media.src;
+        img.alt = '';
+        img.decoding = 'async';
+        img.loading = 'eager';
+        item.appendChild(img);
+      }
+      return item;
+    };
+
+    // Enough tiles for one full loop unit (≥ ~1.25 viewports), then exact duplicate for -50%
+    let unit = [];
+    while(unit.length < Math.max(6, strip.length * 2)){
+      unit = unit.concat(strip);
+    }
+    track.innerHTML = '';
+    const appendUnit = () => {
+      unit.forEach((m) => track.appendChild(makeItem(m)));
+    };
+    appendUnit();
+    // Grow until one unit roughly fills the screen, then lock and duplicate
+    let guard = 0;
+    while(track.scrollWidth < window.innerWidth * 1.2 && guard < 4){
+      unit = unit.concat(strip);
+      track.innerHTML = '';
+      appendUnit();
+      guard += 1;
+    }
+    appendUnit(); // second identical half
+
+    const playAll = () => {
+      track.querySelectorAll('video').forEach((v) => {
+        v.muted = true;
+        if(v.paused) v.play().catch(() => {});
+      });
+    };
+    playAll();
+    document.addEventListener('visibilitychange', () => {
+      if(!document.hidden) playAll();
+    });
+    setInterval(playAll, 8000);
+
+    requestAnimationFrame(() => {
+      const halfWidth = track.scrollWidth / 2;
+      const pxPerSec = 34;
+      const duration = Math.max(30, halfWidth / pxPerSec);
+      wrap.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
+      wrap.classList.add('is-ready');
+      playAll();
+    });
+  })();
 
   // scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
