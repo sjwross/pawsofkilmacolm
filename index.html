@@ -986,8 +986,8 @@
   }
 
   // ---------- media helpers (photos + videos) ----------
-  const IMAGE_EXTS = ['.jpg', '.jpeg', '.png', '.webp'];
-  const VIDEO_EXTS = ['.mp4', '.webm', '.mov'];
+  const IMAGE_EXTS = ['.jpg', '.png'];
+  const VIDEO_EXTS = ['.mp4', '.webm'];
   const isVideoPath = (src) => /\.(mp4|webm|mov)(?:\?|$)/i.test(src);
 
   const urlExists = async (path) => {
