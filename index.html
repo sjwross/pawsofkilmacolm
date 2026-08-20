@@ -187,10 +187,18 @@
     background:var(--bg-tertiary);
   }
   html.dark .placeholder-img.has-photo{ background:#1c1a15; }
-  .placeholder-img.has-photo img{
+  .placeholder-img.has-photo img,
+  .placeholder-img.has-photo video{
     width:100%; height:100%; object-fit:cover;
+    pointer-events:none;
   }
-  .about-photo.has-photo img{ object-position: 20% center; }
+  .placeholder-img.has-photo video{
+    display:block;
+    border:0;
+    background:var(--bg-tertiary);
+  }
+  .about-photo.has-photo img,
+  .about-photo.has-photo video{ object-position: 20% center; }
   .ig-strip{
     display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
     margin-top:28px;
@@ -482,7 +490,7 @@
 <body class="has-demo-bar">
 
 <div class="grain"></div>
-<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop Instagram photos into <strong>media/</strong> as <strong>gallery-01.jpg</strong> … <strong>07.jpg</strong>, plus <strong>about.jpg</strong> and <strong>team.jpg</strong>.</div>
+<div class="demo-bar">Preview for Paws of Kilmacolm — sage notes are draft copy. Drop Instagram photos into <strong>media/</strong> as <strong>gallery-01.jpg</strong> … <strong>07.jpg</strong>, plus <strong>about.jpg</strong> and <strong>Groomerportrait.jpg</strong>. Empty gallery cells also accept a looping <strong>.mp4</strong>.</div>
 
 <!-- NAV -->
 <header class="site" id="siteHeader">
@@ -628,16 +636,16 @@
     <div class="section-head reveal">
       <div class="kicker">paws in progress</div>
       <h2>Recent grooms</h2>
-      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>.</p>
+      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code> — a still as <code>gallery-02.jpg</code>, or a silent looping clip as <code>gallery-02.mp4</code>.</p>
     </div>
     <div class="gallery-grid reveal stagger">
       <div class="placeholder-img g1" style="--i:0" data-photo="media/gallery-01.jpg" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01.jpg</span>Instagram groom photo<span class="ph-size">720 × 720px</span></div></div>
-      <div class="placeholder-img g2" style="--i:1" data-photo="media/gallery-02.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-02.jpg</span>Instagram groom photo<span class="ph-size">720 × 480px</span></div></div>
-      <div class="placeholder-img g3" style="--i:2" data-photo="media/gallery-03.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-03.jpg</span>Instagram groom photo<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g4" style="--i:3" data-photo="media/gallery-04.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-04.jpg</span>Instagram groom photo<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g5" style="--i:4" data-photo="media/gallery-05.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-05.jpg</span>Instagram groom photo<span class="ph-size">480 × 480px</span></div></div>
-      <div class="placeholder-img g6" style="--i:5" data-photo="media/gallery-06.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-06.jpg</span>Instagram groom photo<span class="ph-size">720 × 480px</span></div></div>
-      <div class="placeholder-img g7" style="--i:6" data-photo="media/gallery-07.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-07.jpg</span>Instagram groom photo<span class="ph-size">720 × 720px</span></div></div>
+      <div class="placeholder-img g2" style="--i:1" data-photo="media/gallery-02.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-02.jpg or .mp4</span>Photo or looping clip<span class="ph-size">720 × 480px</span></div></div>
+      <div class="placeholder-img g3" style="--i:2" data-photo="media/gallery-03.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-03.jpg or .mp4</span>Photo or looping clip<span class="ph-size">480 × 480px</span></div></div>
+      <div class="placeholder-img g4" style="--i:3" data-photo="media/gallery-04.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-04.jpg or .mp4</span>Photo or looping clip<span class="ph-size">480 × 480px</span></div></div>
+      <div class="placeholder-img g5" style="--i:4" data-photo="media/gallery-05.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-05.jpg or .mp4</span>Photo or looping clip<span class="ph-size">480 × 480px</span></div></div>
+      <div class="placeholder-img g6" style="--i:5" data-photo="media/gallery-06.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-06.jpg or .mp4</span>Photo or looping clip<span class="ph-size">720 × 480px</span></div></div>
+      <div class="placeholder-img g7" style="--i:6" data-photo="media/gallery-07.jpg" data-alt="Recent groom from Paws of Kilmacolm Instagram"><div><span class="ph-label">gallery-07.jpg or .mp4</span>Photo or looping clip<span class="ph-size">720 × 720px</span></div></div>
     </div>
     <div class="ig-strip reveal">
       <span class="ig-handle">@pawsofkilmacolm</span>
@@ -665,10 +673,10 @@
         <div class="team-role">City &amp; Guilds Qualified · Kilmacolm</div>
         <p style="margin-top:22px; opacity:0.75; font-size:0.98rem;">Draft bio for the demo: a Kilmacolm groomer working one dog at a time, with a particular patience for nervous first-timers and older coats. Swap this for training background, years of experience, and the breeds you love most.</p>
       </div>
-      <div class="reveal placeholder-img team-photo" data-photo="media/team.jpg" data-alt="Groomer at Paws of Kilmacolm holding a small curly-coated dog in a gingham bandana, foliage wall and neon sign behind">
+      <div class="reveal placeholder-img team-photo" data-photo="media/Groomerportrait.jpg" data-alt="Groomer at Paws of Kilmacolm holding a small curly-coated dog in a gingham bandana, foliage wall and neon sign behind">
         <div>
           <span class="ph-label">Instagram photo</span>
-          Groomer portrait — drop <b>media/team.jpg</b>
+          Groomer portrait — drop <b>media/Groomerportrait.jpg</b>
           <span class="ph-size">Recommended: 900 × 1200px (3:4)</span>
         </div>
       </div>
@@ -911,25 +919,102 @@
     }));
   }
 
-  // load dropped Instagram / local photos when files exist
+  // Gallery cells show an existing photo first. Empty cells can take a looping .mp4 instead.
+  const cacheBust = (src) => src + (src.includes('?') ? '&' : '?') + 'v=' + Date.now();
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   const tryPhoto = (src) => new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve(img);
     img.onerror = () => resolve(null);
-    img.src = src + (src.includes('?') ? '&' : '?') + 'v=' + Date.now();
+    img.src = cacheBust(src);
   });
+
+  const tryVideo = (src) => new Promise((resolve) => {
+    const video = document.createElement('video');
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.controls = false;
+    video.disablePictureInPicture = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('loop', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+    video.setAttribute('disablepictureinpicture', '');
+    const ok = () => { cleanup(); resolve(video); };
+    const fail = () => { cleanup(); resolve(null); };
+    const cleanup = () => {
+      clearTimeout(timer);
+      video.removeEventListener('loadeddata', ok);
+      video.removeEventListener('error', fail);
+    };
+    const timer = setTimeout(fail, 8000);
+    video.addEventListener('loadeddata', ok, { once:true });
+    video.addEventListener('error', fail, { once:true });
+    video.src = cacheBust(src);
+    video.load();
+  });
+
+  const siblingVideos = (photoSrc) => {
+    const base = photoSrc.replace(/\.[a-z0-9]+$/i, '');
+    return [base + '.mp4', base + '.webm'];
+  };
+
+  const playWhenVisible = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target;
+      if(prefersReducedMotion){
+        video.pause();
+        return;
+      }
+      if(entry.isIntersecting){
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  const mountLoopingVideo = (el, video, alt) => {
+    video.setAttribute('aria-label', alt);
+    video.setAttribute('role', 'img');
+    video.addEventListener('ended', () => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    });
+    el.classList.add('has-photo', 'has-video');
+    el.innerHTML = '';
+    el.appendChild(video);
+    playWhenVisible.observe(video);
+    if(!prefersReducedMotion){
+      const rect = video.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+      if(inView) video.play().catch(() => {});
+    }
+  };
+
   document.querySelectorAll('[data-photo]').forEach(async (el) => {
     const src = el.getAttribute('data-photo');
+    const alt = el.getAttribute('data-alt') || el.getAttribute('alt') || '';
     const loaded = await tryPhoto(src);
-    if(!loaded) return;
-    loaded.alt = el.getAttribute('data-alt') || el.getAttribute('alt') || '';
-    if(el.tagName === 'IMG'){
-      el.src = loaded.src;
-    } else {
-      el.classList.add('has-photo');
-      el.innerHTML = '';
-      el.appendChild(loaded);
+    if(loaded){
+      loaded.alt = alt;
+      if(el.tagName === 'IMG'){
+        el.src = loaded.src;
+      } else {
+        el.classList.add('has-photo');
+        el.innerHTML = '';
+        el.appendChild(loaded);
+      }
+      return;
     }
+    if(!el.closest('.gallery-grid')) return;
+    const hits = await Promise.all(siblingVideos(src).map(tryVideo));
+    const video = hits.find(Boolean);
+    if(video) mountLoopingVideo(el, video, alt);
   });
 
   // scroll reveal
