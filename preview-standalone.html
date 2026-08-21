@@ -587,7 +587,7 @@
 <body class="has-demo-bar">
 
 <div class="grain"></div>
-<div class="demo-bar">Live build <strong>2026-08-21 00:29 UTC</strong> — scroll cue centered; logo subtitle repaired.</div>
+<div class="demo-bar">Live build <strong>2026-08-21 00:37 UTC</strong> — gallery-08 black flash trimmed for clean loop.</div>
 
 <!-- NAV -->
 <header class="site" id="siteHeader">
@@ -1002,7 +1002,9 @@
 </footer>
 
 <script>
-  window.__PAWS_BUILD__ = '2026-08-21 00:29 UTC';
+  window.__PAWS_BUILD__ = '2026-08-21 00:37 UTC';
+  const MEDIA_VER = encodeURIComponent(window.__PAWS_BUILD__);
+  const withVer = (src) => src + (src.includes('?') ? '&' : '?') + 'v=' + MEDIA_VER;
 
   // sticky nav solidify
   const header = document.getElementById('siteHeader');
@@ -1081,6 +1083,7 @@
   });
 
   const probePath = async (path) => {
+    path = typeof withVer === 'function' ? withVer(path.split('?')[0]) : path;
     if(!(await urlExists(path))) return null;
     if(isVideoPath(path)) return tryVideo(path);
     return tryImage(path);
