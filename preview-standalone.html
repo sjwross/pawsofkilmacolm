@@ -8,7 +8,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paws of Kilmacolm — Dog Grooming Salon</title>
 <meta name="description" content="Paws of Kilmacolm: a calm, considered dog grooming salon in Kilmacolm, Scotland.">
-<link rel="icon" href="https://sjwross.github.io/pawsofkilmacolm/assets/paws-logo.png" type="image/jpeg">
+<link rel="icon" href="https://sjwross.github.io/pawsofkilmacolm/assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="https://sjwross.github.io/pawsofkilmacolm/assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Jost:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -455,6 +456,39 @@
   .g10{ grid-column:span 2; grid-row:span 2; }
 
   .gallery-note{ margin-top:34px; font-size:0.9rem; color:var(--text-muted); text-align:center; }
+  .gallery-grid .placeholder-img.has-photo{ cursor:zoom-in; }
+  .gallery-grid .placeholder-img.has-photo:focus-visible{ outline:2px solid var(--sage); outline-offset:3px; }
+
+  /* Gallery lightbox */
+  .lightbox{
+    position:fixed; inset:0; z-index:3000;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px; background:rgba(21,19,15,0.82);
+    opacity:0; pointer-events:none; transition:opacity .35s var(--ease);
+  }
+  .lightbox.open{ opacity:1; pointer-events:auto; }
+  .lightbox-inner{
+    position:relative; max-width:min(920px, 96vw); max-height:88vh;
+    width:auto; display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox-inner img,
+  .lightbox-inner video{
+    max-width:96vw; max-height:88vh; width:auto; height:auto;
+    object-fit:contain; border-radius:4px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    background:#111;
+  }
+  .lightbox-close{
+    position:absolute; top:-14px; right:-14px; z-index:2;
+    width:42px; height:42px; border:0; border-radius:50%;
+    background:var(--sage); color:var(--ink); font-size:1.4rem; line-height:1;
+    cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 4px 16px rgba(0,0,0,0.25);
+  }
+  .lightbox-close:hover{ background:var(--parchment); }
+  @media (max-width:720px){
+    .lightbox-close{ top:8px; right:8px; }
+  }
 
   /* ---------- team ---------- */
   .team-grid{ display:grid; grid-template-columns:0.8fr 1.2fr; gap:64px; align-items:center; }
@@ -587,7 +621,7 @@
 <body class="has-demo-bar">
 
 <div class="grain"></div>
-<div class="demo-bar">Live build <strong>2026-08-21 00:37 UTC</strong> — gallery-08 black flash trimmed for clean loop.</div>
+<div class="demo-bar">Live build <strong>2026-08-21 01:02 UTC</strong> — Katherine, address, hours, gallery expand, compressed media.</div>
 
 <!-- NAV -->
 <header class="site" id="siteHeader">
@@ -738,7 +772,7 @@
     <div class="section-head reveal">
       <div class="kicker">paws in progress</div>
       <h2>Recent grooms</h2>
-      <p>Photos from <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>. More grooms drop in as files land in <code>media/</code>.</p>
+      <p>Photos and videos from the salon and <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>.</p>
     </div>
     <div class="gallery-grid reveal stagger" id="galleryGrid">
       <div class="placeholder-img g1" style="--i:0" data-gallery-slot="1" data-alt="Golden spaniel after a groom at Paws of Kilmacolm, yellow polka-dot bandana and neon salon sign"><div><span class="ph-label">gallery-01</span>Instagram groom photo or video<span class="ph-size">photo / video</span></div></div>
@@ -754,9 +788,9 @@
     </div>
     <div class="ig-strip reveal">
       <span class="ig-handle">@pawsofkilmacolm</span>
-      <a class="btn-ribbon ghost" href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">Follow on Instagram</a>
+      <a class="btn-ribbon" href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">Follow on Instagram</a>
     </div>
-    <p class="gallery-note reveal">Ask owners before featuring their dog. Instagram captions can become alt text after the demo.</p>
+    <p class="gallery-note reveal">Tap any photo or video to expand. Ask owners before featuring their dog.</p>
   </div>
 </section>
 
@@ -774,9 +808,9 @@
       <div class="reveal">
         <div class="kicker">meet your groomer</div>
         <p class="team-quote">"Half of good grooming is a dog who trusts you. We spend as much time on that as we do on the scissors."</p>
-        <div class="team-name">Founder &amp; Head Groomer <span class="draft-tag">name to confirm</span></div>
-        <div class="team-role">City &amp; Guilds Qualified · Kilmacolm</div>
-        <p style="margin-top:22px; opacity:0.75; font-size:0.98rem;">Draft bio for the demo: a Kilmacolm groomer working one dog at a time, with a particular patience for nervous first-timers and older coats. Swap this for training background, years of experience, and the breeds you love most.</p>
+        <div class="team-name">Katherine</div>
+        <div class="team-role">Founder &amp; Head Groomer · City &amp; Guilds Qualified · Kilmacolm</div>
+        <p style="margin-top:22px; opacity:0.75; font-size:0.98rem;">Katherine runs Paws of Kilmacolm one dog at a time — with particular patience for nervous first-timers, older coats, and anyone who'd rather not be rushed.</p>
       </div>
       <div class="reveal placeholder-img team-photo" data-photo="https://sjwross.github.io/pawsofkilmacolm/media/team.jpg" data-alt="Groomer at Paws of Kilmacolm holding a small curly-coated dog in a gingham bandana, foliage wall and neon sign behind">
         <div>
@@ -802,7 +836,7 @@
     <div class="section-head reveal">
       <div class="kicker">kind words</div>
       <h2>From dogs &amp; their people</h2>
-      <p>Sample layout copy for the demo — replace with real Google / Facebook reviews before launch.</p>
+      <p>A few words from local owners — more reviews coming as we grow.</p>
     </div>
   </div>
   <div class="wrap test-track-wrap reveal">
@@ -878,22 +912,27 @@
       <div class="reveal">
         <div class="kicker">find the salon</div>
         <h2 style="font-size:clamp(2rem,4vw,2.7rem);">Tucked into the village</h2>
-        <p style="margin-top:16px; opacity:0.75;">In the village of Kilmacolm, Inverclyde — exact street and parking notes to confirm at the demo. The map currently shows the village centre.</p>
+        <p style="margin-top:16px; opacity:0.75;">On Port Glasgow Road in Kilmacolm — easy to find, by appointment only.</p>
         <table class="hours-table">
-          <tr><td>Monday</td><td>Closed <span class="draft-tag">draft</span></td></tr>
-          <tr><td>Tuesday – Friday</td><td>9:00 – 17:00</td></tr>
-          <tr><td>Saturday</td><td>9:00 – 15:00</td></tr>
+          <tr><td>Monday</td><td>Closed</td></tr>
+          <tr><td>Tuesday</td><td>9:00 – 18:00</td></tr>
+          <tr><td>Wednesday</td><td>10:00 – 20:00</td></tr>
+          <tr><td>Thursday</td><td>9:00 – 18:00</td></tr>
+          <tr><td>Friday</td><td>9:00 – 18:00</td></tr>
+          <tr><td>Saturday</td><td>9:00 – 16:00</td></tr>
           <tr><td>Sunday</td><td>Closed</td></tr>
         </table>
         <div class="addr-block">
           <b>Paws of Kilmacolm</b>
-          Street address to confirm<br>
-          Kilmacolm, Inverclyde, Scotland<br>
-          Book via Instagram · <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>
+          Ardgowan Place<br>
+          Port Glasgow Rd<br>
+          Kilmacolm PA13 4AA<br>
+          <a href="tel:07802452142">07802 452142</a><br>
+          Instagram · <a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">@pawsofkilmacolm</a>
         </div>
       </div>
       <div class="reveal">
-        <iframe class="map-frame" title="Map of Kilmacolm village" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=-4.6405%2C55.8875%2C-4.6165%2C55.9015&amp;layer=mapnik&amp;marker=55.8947%2C-4.6278"></iframe>
+        <iframe class="map-frame" title="Map of Paws of Kilmacolm on Port Glasgow Road" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.openstreetmap.org/export/embed.html?bbox=-4.6350%2C55.8925%2C-4.6195%2C55.8975&amp;layer=mapnik&amp;marker=55.8949%2C-4.6272"></iframe>
       </div>
     </div>
   </div>
@@ -906,7 +945,7 @@
       <div class="reveal booking-copy">
         <div class="kicker">ready when you are</div>
         <h2>Book your dog's next visit</h2>
-        <p>Tell us a little about your dog and preferred times, and we'll confirm your appointment directly — usually within one working day.</p>
+        <p>Tell us a little about your dog and preferred times, and Katherine will confirm your appointment — usually within one working day. You can also call or text <a href="tel:07802452142">07802 452142</a>.</p>
         <ul class="booking-points">
           <li><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--sage);margin-top:7px;flex:none;"></span> New clients: a short call before your first visit, just to say hello.</li>
           <li><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--sage);margin-top:7px;flex:none;"></span> Reminders sent by text the day before.</li>
@@ -920,7 +959,7 @@
         </div>
         <div class="field">
           <label for="phone">Phone number</label>
-          <input id="phone" type="tel" placeholder="07xxx xxxxxx" required>
+          <input id="phone" type="tel" placeholder="07802 452142" required>
         </div>
         <div class="field">
           <label for="dogName">Dog's name</label>
@@ -951,7 +990,7 @@
         <div class="field full">
           <button type="submit" class="btn-ribbon" style="width:100%;">Request appointment</button>
         </div>
-        <p class="form-note">Demo form — it prepares an email / Instagram message. Connect booking software or a real inbox before launch.</p>
+        <p class="form-note">We'll confirm by phone or Instagram — usually within one working day. Or call <a href="tel:07802452142">07802 452142</a>.</p>
       </form>
     </div>
   </div>
@@ -981,9 +1020,9 @@
         <h4>Visit</h4>
         <ul>
           <li><a href="#location">Location &amp; hours</a></li>
+          <li><a href="tel:07802452142">07802 452142</a></li>
           <li><a href="#booking">Book an appointment</a></li>
           <li><a href="https://www.instagram.com/pawsofkilmacolm/" target="_blank" rel="noopener">Instagram DM</a></li>
-          <li><a href="#booking">Book an appointment</a></li>
         </ul>
       </div>
       <div>
@@ -996,13 +1035,20 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 Paws of Kilmacolm. All rights reserved.</span>
-      <span>Kilmacolm, Inverclyde, Scotland</span>
+      <span>Ardgowan Place, Kilmacolm PA13 4AA</span>
     </div>
   </div>
 </footer>
 
+<div class="lightbox" id="lightbox" hidden>
+  <div class="lightbox-inner">
+    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+    <div id="lightboxMedia"></div>
+  </div>
+</div>
+
 <script>
-  window.__PAWS_BUILD__ = '2026-08-21 00:37 UTC';
+  window.__PAWS_BUILD__ = '2026-08-21 01:02 UTC';
   const MEDIA_VER = encodeURIComponent(window.__PAWS_BUILD__);
   const withVer = (src) => src + (src.includes('?') ? '&' : '?') + 'v=' + MEDIA_VER;
 
@@ -1138,6 +1184,11 @@
       img.style.objectPosition = 'center center';
       el.appendChild(img);
     }
+    if(el.hasAttribute('data-gallery-slot')){
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-label', `Expand: ${alt || 'gallery media'}`);
+    }
   };
 
   // Named section photos (about / team)
@@ -1269,6 +1320,69 @@
       wrap.style.setProperty('--marquee-duration', `${duration.toFixed(1)}s`);
       wrap.classList.add('is-ready');
       playAll();
+    });
+
+    // Gallery tap-to-expand lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxMedia = document.getElementById('lightboxMedia');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const openLightbox = (el) => {
+      if(!lightbox || !lightboxMedia) return;
+      const video = el.querySelector('video');
+      const img = el.querySelector('img');
+      lightboxMedia.innerHTML = '';
+      if(video){
+        const v = document.createElement('video');
+        v.src = video.currentSrc || video.src;
+        v.controls = true;
+        v.autoplay = true;
+        v.loop = true;
+        v.muted = false;
+        v.playsInline = true;
+        v.setAttribute('playsinline', '');
+        lightboxMedia.appendChild(v);
+        v.play().catch(() => {});
+      } else if(img){
+        const i = document.createElement('img');
+        i.src = img.currentSrc || img.src;
+        i.alt = img.alt || '';
+        lightboxMedia.appendChild(i);
+      } else {
+        return;
+      }
+      lightbox.hidden = false;
+      requestAnimationFrame(() => lightbox.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+      lightboxClose?.focus();
+    };
+    const closeLightbox = () => {
+      if(!lightbox) return;
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      const stop = () => {
+        lightboxMedia.innerHTML = '';
+        lightbox.hidden = true;
+      };
+      lightbox.addEventListener('transitionend', stop, { once:true });
+      setTimeout(stop, 400);
+    };
+    gallerySlots.forEach((el) => {
+      el.addEventListener('click', () => {
+        if(el.classList.contains('has-photo')) openLightbox(el);
+      });
+      el.addEventListener('keydown', (e) => {
+        if((e.key === 'Enter' || e.key === ' ') && el.classList.contains('has-photo')){
+          e.preventDefault();
+          openLightbox(el);
+        }
+      });
+    });
+    lightboxClose?.addEventListener('click', (e) => { e.stopPropagation(); closeLightbox(); });
+    lightbox?.addEventListener('click', (e) => {
+      if(e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && lightbox?.classList.contains('open')) closeLightbox();
     });
   })();
 
