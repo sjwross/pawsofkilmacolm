@@ -585,39 +585,6 @@
   .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:28px; border-top:1px solid var(--line-color);
     font-size:0.82rem; color:var(--text-muted); flex-wrap:wrap; gap:12px; }
 
-  /* ---------- watermark overlay ---------- */
-  .watermark-overlay{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    pointer-events:none;
-    overflow:hidden;
-    opacity:0.07;
-  }
-  .watermark-pattern{
-    position:absolute;
-    inset:-50%;
-    width:200%;
-    height:200%;
-    display:flex;
-    flex-wrap:wrap;
-    align-content:flex-start;
-    transform:rotate(-25deg);
-    transform-origin:center center;
-  }
-  .watermark-text{
-    font-family:'Jost', sans-serif;
-    font-size:clamp(14px, 2.5vw, 22px);
-    font-weight:600;
-    letter-spacing:0.15em;
-    text-transform:uppercase;
-    color:var(--text-primary);
-    white-space:nowrap;
-    padding:30px 50px;
-    user-select:none;
-  }
-  html.dark .watermark-text{ color:#f4ecd8; }
-
   /* ---------- misc ---------- */
   .badge-row{ display:flex; gap:34px; flex-wrap:wrap; margin-top:54px; opacity:0.75; }
   .badge-row .badge{ display:flex; align-items:center; gap:10px; font-size:0.85rem; }
@@ -652,11 +619,6 @@
 </style>
 </head>
 <body class="has-demo-bar">
-
-<!-- WATERMARK OVERLAY -->
-<div class="watermark-overlay" aria-hidden="true">
-  <div class="watermark-pattern" id="watermarkPattern"></div>
-</div>
 
 <div class="grain"></div>
 <div class="demo-bar">Live build <strong>2026-08-21 01:02 UTC</strong> — Katherine, address, hours, gallery expand, compressed media.</div>
@@ -1086,19 +1048,6 @@
 </div>
 
 <script>
-  // Watermark pattern generator
-  (function(){
-    const pattern = document.getElementById('watermarkPattern');
-    if(!pattern) return;
-    const watermarkText = 'PREVIEW • DESIGNED BY YUR SHACK';
-    const repeatCount = 200;
-    let html = '';
-    for(let i = 0; i < repeatCount; i++){
-      html += '<span class="watermark-text">' + watermarkText + '</span>';
-    }
-    pattern.innerHTML = html;
-  })();
-
   window.__PAWS_BUILD__ = '2026-08-21 01:02 UTC';
   const MEDIA_VER = encodeURIComponent(window.__PAWS_BUILD__);
   const withVer = (src) => src + (src.includes('?') ? '&' : '?') + 'v=' + MEDIA_VER;
